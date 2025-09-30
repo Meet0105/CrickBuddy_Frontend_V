@@ -74,10 +74,7 @@ export default function SearchPlayers({ initialPlayers }: { initialPlayers: Play
                 <h3 className="text-lg font-bold text-green-300 mb-2">{player.name}</h3>
                 <p className="text-green-200 text-sm mb-1">Role: {player.role}</p>
                 <p className="text-green-200 text-sm mb-3">Country: {player.country}</p>
-                <Link 
-                  href={`/players/${player.playerId}`} 
-                  className="text-green-300 hover:text-green-400 text-sm font-medium"
-                >
+                <Link href={`/players/${player.playerId}`} className="text-green-300 hover:text-green-400 text-sm font-medium">
                   View Details →
                 </Link>
               </div>
