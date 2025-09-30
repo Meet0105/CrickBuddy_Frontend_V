@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { TeamRanking, PlayerRanking } from './utils/rankingTypes';
-import { TeamRankingsTable } from './TeamRankingsTable';
-import { PlayerRankingsTable } from './PlayerRankingsTable';
-import { fetchAllWomenRankings } from './utils/womenRankingData';
+import { TeamRanking, PlayerRanking } from '../../utils/rankings/rankingTypes';
+import { TeamRankingsTable } from '../../components/rankings/TeamRankingsTable';
+import { PlayerRankingsTable } from '../../components/rankings/PlayerRankingsTable';
+import { fetchAllWomenRankings } from '../../utils/rankings/womenRankingData';
 
 export default function WomenRankings({ 
   testTeamRankings, 

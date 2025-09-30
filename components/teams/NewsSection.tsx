@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { NewsItem } from './utils/teamTypes';
+import { NewsItem } from '../../utils/teams/teamTypes';
 
 interface NewsSectionProps {
   news: NewsItem[];

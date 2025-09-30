@@ -1,12 +1,13 @@
 import axios from 'axios';
-import api from '../../../utils/api';
+import api from '../../utils/api';
+import { Series } from './seriesTypes';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 // Fetch series details
-export const fetchSeriesDetails = async (seriesId: string) => {
+export const fetchSeriesDetails = async (seriesId: string): Promise<Series | null> => {
   // Fetch series details from database first
-  let series = null;
+  let series: Series | null = null;
   try {
     const seriesRes = await axios.get(`${apiUrl}/api/series/${seriesId}`);
     
@@ -28,7 +29,7 @@ export const fetchSeriesDetails = async (seriesId: string) => {
         teams: s.teams || []
       };
     }
-  } catch (dbError) {
+  } catch (dbError: any) {
     console.log('Database lookup failed, trying API list:', dbError.message);
     
     // Fallback to API list if database lookup fails
@@ -114,7 +115,7 @@ export const fetchSeriesMatches = async (seriesId: string) => {
           }));
       }
     }
-  } catch (matchError) {
+  } catch (matchError: any) {
     console.log('Error fetching matches:', matchError.message);
     matches = [];
   }

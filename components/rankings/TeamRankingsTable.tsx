@@ -1,5 +1,5 @@
 import React from 'react';
-import { TeamRanking } from './utils/rankingTypes';
+import { TeamRanking } from '../../utils/rankings/rankingTypes';
 
 interface TeamRankingsTableProps {
   title: string;

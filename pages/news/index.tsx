@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { NewsItem, Category } from './utils/newsTypes';
-import { NewsCard } from './NewsCard';
-import { CategoriesSection } from './CategoriesSection';
-import { processNewsData, createFallbackNews, createFallbackCategories } from './utils/newsHelpers';
+import { NewsItem, Category } from '../../utils/news/newsTypes';
+import { NewsCard } from '../../components/news/NewsCard';
+import { CategoriesSection } from '../../components/news/CategoriesSection';
+import { processNewsData, createFallbackNews, createFallbackCategories } from '../../utils/news/newsHelpers';
 
 export default function News({ news, categories, error }: { news: NewsItem[]; categories: Category[]; error?: string }) {
   if (error) {

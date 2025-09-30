@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { NewsItem } from './utils/newsTypes';
+import { NewsItem } from '../../utils/news/newsTypes';
 
 interface NewsCardProps {
   item: NewsItem;

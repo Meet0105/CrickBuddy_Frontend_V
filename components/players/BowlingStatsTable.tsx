@@ -1,5 +1,5 @@
 import React from 'react';
-import { BowlingStat } from './utils/playerTypes';
+import { BowlingStat } from '../../utils/players/playerTypes';
 
 interface BowlingStatsTableProps {
   bowlingStats: BowlingStat[];

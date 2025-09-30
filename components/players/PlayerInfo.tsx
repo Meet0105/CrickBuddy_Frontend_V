@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerRanking } from './utils/playerTypes';
+import { PlayerRanking } from '../../utils/players/playerTypes';
 
 interface Player {
   playerId: string;

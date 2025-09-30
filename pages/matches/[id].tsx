@@ -6,10 +6,10 @@ import MatchCommentary from '../../components/MatchCommentary';
 import MatchOvers from '../../components/MatchOvers';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { MatchHeader } from './MatchHeader';
-import { MatchTabs } from './MatchTabs';
-import { extractTeamInfo, extractMatchInfo } from './utils/matchHelpers';
-import { fetchMatchData, syncMatchDetails } from './utils/dataFetching';
+import { MatchHeader } from '../../components/matches/MatchHeader';
+import { MatchTabs } from '../../components/matches/MatchTabs';
+import { extractTeamInfo, extractMatchInfo } from '../../utils/matches/matchHelpers';
+import { fetchMatchData, syncMatchDetails } from '../../utils/matches/dataFetching';
 
 export default function MatchDetails({ match, matchId }: any) {
   console.log('Match data received:', match);

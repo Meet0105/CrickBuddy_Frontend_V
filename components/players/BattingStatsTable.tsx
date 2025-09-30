@@ -1,5 +1,5 @@
 import React from 'react';
-import { BattingStat } from './utils/playerTypes';
+import { BattingStat } from '../../utils/players/playerTypes';
 
 interface BattingStatsTableProps {
   battingStats: BattingStat[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NewsItem } from './utils/playerTypes';
+import { NewsItem } from '../../utils/players/playerTypes';
 
 interface PlayerNewsProps {
   news: NewsItem[];

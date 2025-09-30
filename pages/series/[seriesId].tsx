@@ -6,14 +6,14 @@ import SeriesSchedule from '../../components/SeriesSchedule';
 import SeriesSquads from '../../components/SeriesSquads';
 import SeriesPointsTable from '../../components/SeriesPointsTable';
 import { useState, useEffect } from 'react';
-import { Series, Match } from './utils/seriesTypes';
-import { fetchAllSeriesData, fetchSeriesTabData } from './utils/seriesDataFetching';
-import { SeriesInfo } from './SeriesInfo';
-import { SeriesTabs } from './SeriesTabs';
-import { MatchesTab } from './MatchesTab';
-import { VenuesTab } from './VenuesTab';
-import { StatsTab } from './StatsTab';
-import { SeriesStatus, SeriesNotFound } from './SeriesStatus';
+import { Series, Match } from '../../utils/series/seriesTypes';
+import { fetchAllSeriesData, fetchSeriesTabData } from '../../utils/series/seriesDataFetching';
+import { SeriesInfo } from '../../components/series/SeriesInfo';
+import { SeriesTabs } from '../../components/series/SeriesTabs';
+import { MatchesTab } from '../../components/series/MatchesTab';
+import { VenuesTab } from '../../components/series/VenuesTab';
+import { StatsTab } from '../../components/series/StatsTab';
+import { SeriesStatus, SeriesNotFound } from '../../components/series/SeriesStatus';
 
 export default function SeriesDetails({ series, matches }: { series: Series; matches: Match[] }) {
   const [activeTab, setActiveTab] = useState('matches');

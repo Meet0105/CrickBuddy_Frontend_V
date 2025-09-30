@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { RecordItem } from './utils/recordsTypes';
-import { getCountryFlag, getPlayerInitials } from './utils/recordsHelpers';
+import { RecordItem } from '../../utils/records/recordsTypes';
+import { getCountryFlag, getPlayerInitials } from '../../utils/records/recordsHelpers';
 
 interface RecordsTableProps {
   records: RecordItem[];

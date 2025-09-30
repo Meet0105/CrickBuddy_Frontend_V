@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerRanking } from './utils/rankingTypes';
+import { PlayerRanking } from '../../utils/rankings/rankingTypes';
 
 interface PlayerRankingsTableProps {
   title: string;
@@ -30,7 +30,7 @@ export const PlayerRankingsTable: React.FC<PlayerRankingsTableProps> = ({ title,
                 {rankings.map((player) => (
                   <tr 
                     key={player.position} 
-                    className={player.position <= 3 ? 'bg-gradient-to-r from-green-900/30 to-green-800/20' : 'hover:bg-gray-750 transition'}
+                    className={Number(player.position) <= 3 ? 'bg-gradient-to-r from-green-900/30 to-green-800/20' : 'hover:bg-gray-750 transition'}
                   >
                     <td className="px-4 py-3 whitespace-nowrap text-sm font-bold text-green-400">{player.position}</td>
                     <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-200">{player.playerName}</td>

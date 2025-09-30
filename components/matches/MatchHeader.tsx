@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { extractTeamInfo, extractMatchInfo, getMatchStatusColor } from './utils/matchHelpers';
+import { extractTeamInfo, extractMatchInfo, getMatchStatusColor } from '../../utils/matches/matchHelpers';
 
 interface MatchHeaderProps {
   currentMatch: any;

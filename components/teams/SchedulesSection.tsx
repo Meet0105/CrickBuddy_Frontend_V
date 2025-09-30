@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Schedule } from './utils/teamTypes';
+import { Schedule } from '../../utils/teams/teamTypes';
 
 interface SchedulesSectionProps {
   schedules: Schedule[];

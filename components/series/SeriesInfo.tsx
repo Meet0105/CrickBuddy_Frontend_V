@@ -1,5 +1,5 @@
 import React from 'react';
-import { Series } from './utils/seriesTypes';
+import { Series } from '../../utils/series/seriesTypes';
 
 interface SeriesInfoProps {
   series: Series;

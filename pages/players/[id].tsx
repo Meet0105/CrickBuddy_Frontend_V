@@ -1,14 +1,14 @@
 import axios from 'axios';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { Player, CareerStat, BattingStat, BowlingStat, NewsItem, PlayerRankings } from './utils/playerTypes';
-import { PlayerHeader } from './PlayerHeader';
-import { PlayerInfo } from './PlayerInfo';
-import { CareerStatsTable } from './CareerStatsTable';
-import { BattingStatsTable } from './BattingStatsTable';
-import { BowlingStatsTable } from './BowlingStatsTable';
-import { PlayerNews } from './PlayerNews';
-import { fetchAllPlayerData } from './utils/playerDataFetching';
+import { Player, CareerStat, BattingStat, BowlingStat, NewsItem, PlayerRankings } from '../../utils/players/playerTypes';
+import { PlayerHeader } from '../../components/players/PlayerHeader';
+import { PlayerInfo } from '../../components/players/PlayerInfo';
+import { CareerStatsTable } from '../../components/players/CareerStatsTable';
+import { BattingStatsTable } from '../../components/players/BattingStatsTable';
+import { BowlingStatsTable } from '../../components/players/BowlingStatsTable';
+import { PlayerNews } from '../../components/players/PlayerNews';
+import { fetchAllPlayerData } from '../../utils/players/playerDataFetching';
 
 export default function PlayerPage({ player, career, battingStats, bowlingStats, news, rankings }: { 
   player: Player, 

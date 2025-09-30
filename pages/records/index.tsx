@@ -1,11 +1,11 @@
 import axios from 'axios';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { RecordItem, FilterOption } from './utils/recordsTypes';
-import { QuickCategories } from './QuickCategories';
-import { RecordsFilter } from './RecordsFilter';
-import { RecordsTable } from './RecordsTable';
-import { fetchAllRecordsData } from './utils/recordsDataFetching';
+import { RecordItem, FilterOption } from '../../utils/records/recordsTypes';
+import { QuickCategories } from '../../components/records/QuickCategories';
+import { RecordsFilter } from '../../components/records/RecordsFilter';
+import { RecordsTable } from '../../components/records/RecordsTable';
+import { fetchAllRecordsData } from '../../utils/records/recordsDataFetching';
 
 export default function Records({ 
   records, 

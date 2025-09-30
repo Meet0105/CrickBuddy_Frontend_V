@@ -1,14 +1,14 @@
 import axios from 'axios';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { Team, Schedule, Result, NewsItem } from './utils/teamTypes';
-import { fetchAllTeamData } from './utils/teamDataFetching';
-import { TeamHeader } from './TeamHeader';
-import { TeamInfo } from './TeamInfo';
-import { SchedulesSection } from './SchedulesSection';
-import { ResultsSection } from './ResultsSection';
-import { NewsSection } from './NewsSection';
-import { TeamNotFound } from './TeamNotFound';
+import { Team, Schedule, Result, NewsItem } from '../../utils/teams/teamTypes';
+import { fetchAllTeamData } from '../../utils/teams/teamDataFetching';
+import { TeamHeader } from '../../components/teams/TeamHeader';
+import { TeamInfo } from '../../components/teams/TeamInfo';
+import { SchedulesSection } from '../../components/teams/SchedulesSection';
+import { ResultsSection } from '../../components/teams/ResultsSection';
+import { NewsSection } from '../../components/teams/NewsSection';
+import { TeamNotFound } from '../../components/teams/TeamNotFound';
 
 export default function TeamDetails({ team, schedules, results, news }: {
   team: Team,

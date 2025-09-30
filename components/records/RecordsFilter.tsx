@@ -1,5 +1,5 @@
 import React from 'react';
-import { FilterOption } from './utils/recordsTypes';
+import { FilterOption } from '../../utils/records/recordsTypes';
 
 interface RecordsFilterProps {
   filters: FilterOption[];

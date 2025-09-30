@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Team } from './utils/teamTypes';
+import { Team } from '../../utils/teams/teamTypes';
 
 interface TeamHeaderProps {
   team: Team;

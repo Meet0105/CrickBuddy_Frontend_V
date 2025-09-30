@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Match } from './utils/seriesTypes';
+import { Match } from '../../utils/series/seriesTypes';
 
 interface MatchesTabProps {
   matches: Match[];

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Result } from './utils/teamTypes';
+import { Result } from '../../utils/teams/teamTypes';
 
 interface ResultsSectionProps {
   results: Result[];

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Team, Player } from './utils/teamTypes';
+import { Team, Player } from '../../utils/teams/teamTypes';
 import { getPlayerImageUrl, getPlayerInitials } from '../../utils/playerImageUtils';
 
 interface TeamInfoProps {

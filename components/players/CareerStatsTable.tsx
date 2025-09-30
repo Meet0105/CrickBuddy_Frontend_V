@@ -1,5 +1,5 @@
 import React from 'react';
-import { CareerStat } from './utils/playerTypes';
+import { CareerStat } from '../../utils/players/playerTypes';
 
 interface CareerStatsTableProps {
   career: CareerStat[];
