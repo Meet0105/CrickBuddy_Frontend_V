@@ -473,23 +473,40 @@ export async function getServerSideProps() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000';
     console.log('Fetching data from API URL:', apiUrl);
 
-    // Fetch live matches
-    console.log('Fetching live matches...');
-    const liveRes = await axios.get(`${apiUrl}/api/matches/live`);
-    const liveMatches = Array.isArray(liveRes.data) ? liveRes.data : [];
-    console.log('Live matches response count:', liveMatches.length);
+    // Initialize empty arrays
+    let liveMatches = [];
+    let upcomingMatches = [];
+    let recentMatches = [];
 
-    // Fetch upcoming matches
-    console.log('Fetching upcoming matches...');
-    const upcomingRes = await axios.get(`${apiUrl}/api/matches/upcoming?limit=5`);
-    const upcomingMatches = Array.isArray(upcomingRes.data) ? upcomingRes.data : [];
-    console.log('Upcoming matches response count:', upcomingMatches.length);
+    try {
+      // Fetch live matches
+      console.log('Fetching live matches...');
+      const liveRes = await axios.get(`${apiUrl}/api/matches/live`);
+      liveMatches = Array.isArray(liveRes.data) ? liveRes.data : [];
+      console.log('Live matches response count:', liveMatches.length);
+    } catch (liveError) {
+      console.error('Error fetching live matches:', liveError.message);
+    }
 
-    // Fetch recent matches
-    console.log('Fetching recent matches...');
-    const recentRes = await axios.get(`${apiUrl}/api/matches/recent?limit=5`);
-    const recentMatches = Array.isArray(recentRes.data) ? recentRes.data : [];
-    console.log('Recent matches response count:', recentMatches.length);
+    try {
+      // Fetch upcoming matches
+      console.log('Fetching upcoming matches...');
+      const upcomingRes = await axios.get(`${apiUrl}/api/matches/upcoming?limit=5`);
+      upcomingMatches = Array.isArray(upcomingRes.data) ? upcomingRes.data : [];
+      console.log('Upcoming matches response count:', upcomingMatches.length);
+    } catch (upcomingError) {
+      console.error('Error fetching upcoming matches:', upcomingError.message);
+    }
+
+    try {
+      // Fetch recent matches
+      console.log('Fetching recent matches...');
+      const recentRes = await axios.get(`${apiUrl}/api/matches/recent?limit=5`);
+      recentMatches = Array.isArray(recentRes.data) ? recentRes.data : [];
+      console.log('Recent matches response count:', recentMatches.length);
+    } catch (recentError) {
+      console.error('Error fetching recent matches:', recentError.message);
+    }
 
     return {
       props: {
@@ -499,7 +516,7 @@ export async function getServerSideProps() {
       }
     };
   } catch (error) {
-    console.error('Error fetching matches:', error);
+    console.error('General error in getServerSideProps:', error);
     return {
       props: {
         liveMatches: [],
