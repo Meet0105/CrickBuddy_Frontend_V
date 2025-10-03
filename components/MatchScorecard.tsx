@@ -104,18 +104,73 @@ const MatchScorecard: React.FC<MatchScorecardProps> = ({
     } else if (innings.batsman || innings.batsmen) {
       // Regular scorecard format
       batsmen = innings.batsman || innings.batsmen || [];
-      teamName = innings.batTeam || innings.batteam || '';
+      
+      // Get team ID first
+      const teamId = innings.batTeam || innings.batteam || '';
+      
+      // Map team ID to team name using match data
+      if (match && match.teams && teamId) {
+        const team = match.teams.find((t: any) => 
+          t.teamId === teamId || 
+          t.teamId === teamId.toString() ||
+          t.teamId === parseInt(teamId)
+        );
+        teamName = team ? (team.teamName || team.name) : teamId;
+      } else {
+        teamName = teamId;
+      }
+      
       totalRuns = innings.total || innings.totalRuns || 0;
       totalWickets = innings.wickets || innings.totalWickets || 0;
       totalOvers = innings.overs || innings.totalOvers || 0;
       extras = innings.extras || {};
     }
 
-    // If team name is still empty, try to get it from match data
-    if (!teamName && match?.teams) {
-      // For first innings, use first team; for second innings, use second team
-      const teamIndex = inningsIndex % 2;
-      teamName = match.teams[teamIndex]?.teamName || match.teams[teamIndex]?.name || `Team ${teamIndex + 1}`;
+    // If team name is still empty or is a number, try to get it from match data
+    if ((!teamName || /^\d+$/.test(teamName) || teamName === '') && match?.teams) {
+      // Determine batting order based on toss decision
+      let battingTeamIndex = 0; // Default to first team
+      let bowlingTeamIndex = 1; // Default to second team
+      
+      // Check toss decision to determine who bats first
+      const tossStatus = match?.raw?.tossstatus || '';
+      if (tossStatus.includes('opt to bat') || tossStatus.includes('choose to bat')) {
+        // Find which team opted to bat
+        const team1Name = match.teams[0]?.teamName || '';
+        const team2Name = match.teams[1]?.teamName || '';
+        
+        if (tossStatus.includes(team2Name)) {
+          // Second team opted to bat, so they bat first
+          battingTeamIndex = 1;
+          bowlingTeamIndex = 0;
+        }
+        // If first team opted to bat or unclear, keep default (0, 1)
+      } else if (tossStatus.includes('opt to bowl') || tossStatus.includes('choose to bowl')) {
+        // Find which team opted to bowl
+        const team1Name = match.teams[0]?.teamName || '';
+        const team2Name = match.teams[1]?.teamName || '';
+        
+        if (tossStatus.includes(team1Name)) {
+          // First team opted to bowl, so second team bats first
+          battingTeamIndex = 1;
+          bowlingTeamIndex = 0;
+        } else if (tossStatus.includes(team2Name)) {
+          // Second team opted to bowl, so first team bats first
+          battingTeamIndex = 0;
+          bowlingTeamIndex = 1;
+        }
+      }
+      
+      // For first innings, use the team that bats first; for second innings, use the other team
+      const actualBattingIndex = inningsIndex % 2 === 0 ? battingTeamIndex : bowlingTeamIndex;
+      teamName = match.teams[actualBattingIndex]?.teamName || match.teams[actualBattingIndex]?.name || `Team ${actualBattingIndex + 1}`;
+    }
+
+    // Calculate total runs from batsmen if not available
+    if (totalRuns === 0 && batsmen && batsmen.length > 0) {
+      const batsmenRuns = batsmen.reduce((sum, batsman) => sum + (batsman.runs || 0), 0);
+      const extrasRuns = extras?.total || 0;
+      totalRuns = batsmenRuns + extrasRuns;
     }
 
     if (!batsmen || batsmen.length === 0) {
@@ -255,14 +310,61 @@ const MatchScorecard: React.FC<MatchScorecardProps> = ({
     } else if (innings.bowler || innings.bowlers) {
       // Regular scorecard format
       bowlers = innings.bowler || innings.bowlers || [];
-      teamName = innings.bowlTeam || innings.bowlteam || '';
+      
+      // Get team ID first
+      const teamId = innings.bowlTeam || innings.bowlteam || '';
+      
+      // Map team ID to team name using match data
+      if (match && match.teams && teamId) {
+        const team = match.teams.find((t: any) => 
+          t.teamId === teamId || 
+          t.teamId === teamId.toString() ||
+          t.teamId === parseInt(teamId)
+        );
+        teamName = team ? (team.teamName || team.name) : teamId;
+      } else {
+        teamName = teamId;
+      }
     }
 
-    // If team name is still empty, try to get it from match data
-    if (!teamName && match?.teams) {
-      // For first innings, use second team (bowling); for second innings, use first team
-      const teamIndex = inningsIndex % 2 === 0 ? 1 : 0;
-      teamName = match.teams[teamIndex]?.teamName || match.teams[teamIndex]?.name || `Team ${teamIndex + 1}`;
+    // If team name is still empty or is a number, try to get it from match data
+    if ((!teamName || /^\d+$/.test(teamName) || teamName === '') && match?.teams) {
+      // Determine batting order based on toss decision
+      let battingTeamIndex = 0; // Default to first team
+      let bowlingTeamIndex = 1; // Default to second team
+      
+      // Check toss decision to determine who bats first
+      const tossStatus = match?.raw?.tossstatus || '';
+      if (tossStatus.includes('opt to bat') || tossStatus.includes('choose to bat')) {
+        // Find which team opted to bat
+        const team1Name = match.teams[0]?.teamName || '';
+        const team2Name = match.teams[1]?.teamName || '';
+        
+        if (tossStatus.includes(team2Name)) {
+          // Second team opted to bat, so they bat first
+          battingTeamIndex = 1;
+          bowlingTeamIndex = 0;
+        }
+        // If first team opted to bat or unclear, keep default (0, 1)
+      } else if (tossStatus.includes('opt to bowl') || tossStatus.includes('choose to bowl')) {
+        // Find which team opted to bowl
+        const team1Name = match.teams[0]?.teamName || '';
+        const team2Name = match.teams[1]?.teamName || '';
+        
+        if (tossStatus.includes(team1Name)) {
+          // First team opted to bowl, so second team bats first
+          battingTeamIndex = 1;
+          bowlingTeamIndex = 0;
+        } else if (tossStatus.includes(team2Name)) {
+          // Second team opted to bowl, so first team bats first
+          battingTeamIndex = 0;
+          bowlingTeamIndex = 1;
+        }
+      }
+      
+      // For first innings, use the team that bowls first; for second innings, use the other team
+      const actualBowlingIndex = inningsIndex % 2 === 0 ? bowlingTeamIndex : battingTeamIndex;
+      teamName = match.teams[actualBowlingIndex]?.teamName || match.teams[actualBowlingIndex]?.name || `Team ${actualBowlingIndex + 1}`;
     }
 
     if (!bowlers || bowlers.length === 0) {

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import MatchCard from '../../components/MatchCard';
@@ -23,7 +24,47 @@ const isActuallyCompleted = (match: any) => {
          status === 'CANCELLED';
 };
 
-export default function LiveMatches({ matches }: { matches: Match[] }) {
+export default function LiveMatches() {
+  const [matches, setMatches] = useState<Match[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLiveMatches = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const response = await axios.get(`${apiUrl}/api/matches/live?t=${Date.now()}`, { 
+          timeout: 10000,
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        setMatches(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error('Error fetching live matches:', error);
+        setMatches([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLiveMatches();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+        <Navbar />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-xl text-gray-300">Loading live matches...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Filter out completed matches that are incorrectly marked as live
   const filteredMatches = matches.filter((match: any) => !isActuallyCompleted(match));
   
@@ -70,7 +111,12 @@ export default function LiveMatches({ matches }: { matches: Match[] }) {
 export async function getServerSideProps() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const res = await axios.get(`${apiUrl}/api/matches/live`);
+    const res = await axios.get(`${apiUrl}/api/matches/live?t=${Date.now()}`, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
     const matches = Array.isArray(res.data) ? res.data : [];
     return { props: { matches } };
   } catch (error) {

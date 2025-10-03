@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import MatchCard from '../components/MatchCard';
@@ -8,43 +9,89 @@ type Match = any;
 // Helper function to determine if a match is actually live
 const isActuallyLive = (match: any) => {
   if (match.isLive) return true;
-  
+
   const status = match?.status || '';
   const lowerStatus = status.toLowerCase();
-  
+
   // Check for live status patterns
   return lowerStatus.includes('live') ||
-         lowerStatus.includes('in progress') ||
-         lowerStatus.includes('innings break') ||
-         lowerStatus.includes('rain delay') ||
-         lowerStatus.includes('tea break') ||
-         lowerStatus.includes('lunch break') ||
-         lowerStatus.includes('drinks break');
+    lowerStatus.includes('in progress') ||
+    lowerStatus.includes('innings break') ||
+    lowerStatus.includes('rain delay') ||
+    lowerStatus.includes('tea break') ||
+    lowerStatus.includes('lunch break') ||
+    lowerStatus.includes('drinks break');
 };
 
 // Helper function to determine if a match is actually completed
 const isActuallyCompleted = (match: any) => {
   const status = match?.status || '';
   const lowerStatus = status.toLowerCase();
-  
+
   // Check for completed status patterns
   return lowerStatus.includes('complete') ||
-         lowerStatus.includes('finished') ||
-         lowerStatus.includes('won') ||
-         lowerStatus.includes('abandon') ||
-         lowerStatus.includes('cancel') ||
-         lowerStatus.includes('no result') ||
-         lowerStatus.includes('tied') ||
-         status === 'COMPLETED' ||
-         status === 'ABANDONED' ||
-         status === 'CANCELLED';
+    lowerStatus.includes('finished') ||
+    lowerStatus.includes('won') ||
+    lowerStatus.includes('abandon') ||
+    lowerStatus.includes('cancel') ||
+    lowerStatus.includes('no result') ||
+    lowerStatus.includes('tied') ||
+    status === 'COMPLETED' ||
+    status === 'ABANDONED' ||
+    status === 'CANCELLED';
 };
 
-export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
-  liveMatches: Match[],
-  upcomingMatches: Match[],
-  recentMatches: Match[]
-}) {
+export default function Home() {
+  const [liveMatches, setLiveMatches] = useState<Match[]>([]);
+  const [upcomingMatches, setUpcomingMatches] = useState<Match[]>([]);
+  const [recentMatches, setRecentMatches] = useState<Match[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+        const [liveRes, upcomingRes, recentRes] = await Promise.allSettled([
+          axios.get(`${apiUrl}/api/matches/live`, { timeout: 10000 }),
+          axios.get(`${apiUrl}/api/matches/upcoming?limit=5`, { timeout: 10000 }),
+          axios.get(`${apiUrl}/api/matches/recent?limit=5`, { timeout: 10000 })
+        ]);
+
+        if (liveRes.status === 'fulfilled') {
+          setLiveMatches(Array.isArray(liveRes.value.data) ? liveRes.value.data : []);
+        }
+        if (upcomingRes.status === 'fulfilled') {
+          setUpcomingMatches(Array.isArray(upcomingRes.value.data) ? upcomingRes.value.data : []);
+        }
+        if (recentRes.status === 'fulfilled') {
+          setRecentMatches(Array.isArray(recentRes.value.data) ? recentRes.value.data : []);
+        }
+
+      } catch (error) {
+        console.error('Error fetching match data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-100">
+        <Navbar />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-xl text-gray-300">Loading cricket data...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-100">
       {/* Navbar */}
@@ -201,12 +248,12 @@ export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
                 .filter((match: any) => {
                   // Filter out matches with completely missing essential data
                   const hasValidTeams = (match?.teams && match.teams.length >= 2) ||
-                                       (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
+                    (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
                   const hasValidId = match?.matchId || match?._id;
-                  
+
                   // Filter out completed matches that are incorrectly marked as live
                   const isCompleted = isActuallyCompleted(match);
-                  
+
                   return hasValidTeams && hasValidId && !isCompleted;
                 })
                 .map((match: any) => (
@@ -281,11 +328,19 @@ export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
             {upcomingMatches && upcomingMatches.length > 0 ? (
               upcomingMatches
                 .filter((match: any) => {
-                  // Filter out matches with completely missing essential data
-                  const hasValidTeams = (match?.teams && match.teams.length >= 2) ||
-                                       (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
+                  // For upcoming matches, be very lenient - just need an ID and start date
                   const hasValidId = match?.matchId || match?._id;
-                  return hasValidTeams && hasValidId;
+                  const hasStartDate = match?.startDate;
+
+                  console.log('Filtering upcoming match:', {
+                    matchId: match?.matchId,
+                    title: match?.title,
+                    startDate: match?.startDate,
+                    hasValidId,
+                    hasStartDate
+                  });
+
+                  return hasValidId && hasStartDate;
                 })
                 .map((match: any) => (
                   <Link key={match.matchId || match._id || Math.random()} href={`/matches/${match.matchId || 'unknown'}`}>
@@ -341,20 +396,20 @@ export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
                 .filter((match: any) => {
                   // Filter out matches with completely missing essential data
                   const hasValidTeams = (match?.teams && match.teams.length >= 2) ||
-                                       (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
+                    (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
                   const hasValidId = match?.matchId || match?._id;
                   return hasValidTeams && hasValidId;
                 })
                 .map((match: any) => {
                   const matchActuallyLive = isActuallyLive(match);
-                  const matchActuallyCompleted = isActuallyCompleted(match) || 
-                                    match.status === 'Complete' || 
-                                    match.status === 'COMPLETED' || 
-                                    match.status === 'ABANDONED' || 
-                                    match.status === 'CANCELLED' || 
-                                    match.status.includes('won') || 
-                                    match.status.includes('Win') || 
-                                    match.status.includes('win');
+                  const matchActuallyCompleted = isActuallyCompleted(match) ||
+                    match.status === 'Complete' ||
+                    match.status === 'COMPLETED' ||
+                    match.status === 'ABANDONED' ||
+                    match.status === 'CANCELLED' ||
+                    match.status.includes('won') ||
+                    match.status.includes('Win') ||
+                    match.status.includes('win');
                   const matchActuallyUpcoming = !matchActuallyLive && !matchActuallyCompleted;
 
                   return (

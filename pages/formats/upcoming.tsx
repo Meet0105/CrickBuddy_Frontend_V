@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import MatchCard from '../../components/MatchCard';
@@ -40,7 +41,41 @@ const isActuallyCompleted = (match: any) => {
          status === 'CANCELLED';
 };
 
-export default function UpcomingMatches({ matches }: { matches: Match[] }) {
+export default function UpcomingMatches() {
+  const [matches, setMatches] = useState<Match[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUpcomingMatches = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const response = await axios.get(`${apiUrl}/api/matches/upcoming`, { timeout: 10000 });
+        setMatches(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error('Error fetching upcoming matches:', error);
+        setMatches([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUpcomingMatches();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+        <Navbar />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-xl text-gray-300">Loading upcoming matches...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Filter out matches that are actually live or completed
   const filteredMatches = matches.filter((match: any) => {
     return !isActuallyLive(match) && !isActuallyCompleted(match);
