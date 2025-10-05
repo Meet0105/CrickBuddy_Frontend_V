@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import MatchCard from '../components/MatchCard';
@@ -9,89 +8,43 @@ type Match = any;
 // Helper function to determine if a match is actually live
 const isActuallyLive = (match: any) => {
   if (match.isLive) return true;
-
+  
   const status = match?.status || '';
   const lowerStatus = status.toLowerCase();
-
+  
   // Check for live status patterns
   return lowerStatus.includes('live') ||
-    lowerStatus.includes('in progress') ||
-    lowerStatus.includes('innings break') ||
-    lowerStatus.includes('rain delay') ||
-    lowerStatus.includes('tea break') ||
-    lowerStatus.includes('lunch break') ||
-    lowerStatus.includes('drinks break');
+         lowerStatus.includes('in progress') ||
+         lowerStatus.includes('innings break') ||
+         lowerStatus.includes('rain delay') ||
+         lowerStatus.includes('tea break') ||
+         lowerStatus.includes('lunch break') ||
+         lowerStatus.includes('drinks break');
 };
 
 // Helper function to determine if a match is actually completed
 const isActuallyCompleted = (match: any) => {
   const status = match?.status || '';
   const lowerStatus = status.toLowerCase();
-
+  
   // Check for completed status patterns
   return lowerStatus.includes('complete') ||
-    lowerStatus.includes('finished') ||
-    lowerStatus.includes('won') ||
-    lowerStatus.includes('abandon') ||
-    lowerStatus.includes('cancel') ||
-    lowerStatus.includes('no result') ||
-    lowerStatus.includes('tied') ||
-    status === 'COMPLETED' ||
-    status === 'ABANDONED' ||
-    status === 'CANCELLED';
+         lowerStatus.includes('finished') ||
+         lowerStatus.includes('won') ||
+         lowerStatus.includes('abandon') ||
+         lowerStatus.includes('cancel') ||
+         lowerStatus.includes('no result') ||
+         lowerStatus.includes('tied') ||
+         status === 'COMPLETED' ||
+         status === 'ABANDONED' ||
+         status === 'CANCELLED';
 };
 
-export default function Home() {
-  const [liveMatches, setLiveMatches] = useState<Match[]>([]);
-  const [upcomingMatches, setUpcomingMatches] = useState<Match[]>([]);
-  const [recentMatches, setRecentMatches] = useState<Match[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-
-        const [liveRes, upcomingRes, recentRes] = await Promise.allSettled([
-          axios.get(`${apiUrl}/api/matches/live`, { timeout: 10000 }),
-          axios.get(`${apiUrl}/api/matches/upcoming?limit=5`, { timeout: 10000 }),
-          axios.get(`${apiUrl}/api/matches/recent?limit=5`, { timeout: 10000 })
-        ]);
-
-        if (liveRes.status === 'fulfilled') {
-          setLiveMatches(Array.isArray(liveRes.value.data) ? liveRes.value.data : []);
-        }
-        if (upcomingRes.status === 'fulfilled') {
-          setUpcomingMatches(Array.isArray(upcomingRes.value.data) ? upcomingRes.value.data : []);
-        }
-        if (recentRes.status === 'fulfilled') {
-          setRecentMatches(Array.isArray(recentRes.value.data) ? recentRes.value.data : []);
-        }
-
-      } catch (error) {
-        console.error('Error fetching match data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-100">
-        <Navbar />
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-xl text-gray-300">Loading cricket data...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
+  liveMatches: Match[],
+  upcomingMatches: Match[],
+  recentMatches: Match[]
+}) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-100">
       {/* Navbar */}
@@ -248,12 +201,12 @@ export default function Home() {
                 .filter((match: any) => {
                   // Filter out matches with completely missing essential data
                   const hasValidTeams = (match?.teams && match.teams.length >= 2) ||
-                    (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
+                                       (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
                   const hasValidId = match?.matchId || match?._id;
-
+                  
                   // Filter out completed matches that are incorrectly marked as live
                   const isCompleted = isActuallyCompleted(match);
-
+                  
                   return hasValidTeams && hasValidId && !isCompleted;
                 })
                 .map((match: any) => (
@@ -328,19 +281,11 @@ export default function Home() {
             {upcomingMatches && upcomingMatches.length > 0 ? (
               upcomingMatches
                 .filter((match: any) => {
-                  // For upcoming matches, be very lenient - just need an ID and start date
+                  // Filter out matches with completely missing essential data
+                  const hasValidTeams = (match?.teams && match.teams.length >= 2) ||
+                                       (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
                   const hasValidId = match?.matchId || match?._id;
-                  const hasStartDate = match?.startDate;
-
-                  console.log('Filtering upcoming match:', {
-                    matchId: match?.matchId,
-                    title: match?.title,
-                    startDate: match?.startDate,
-                    hasValidId,
-                    hasStartDate
-                  });
-
-                  return hasValidId && hasStartDate;
+                  return hasValidTeams && hasValidId;
                 })
                 .map((match: any) => (
                   <Link key={match.matchId || match._id || Math.random()} href={`/matches/${match.matchId || 'unknown'}`}>
@@ -396,20 +341,20 @@ export default function Home() {
                 .filter((match: any) => {
                   // Filter out matches with completely missing essential data
                   const hasValidTeams = (match?.teams && match.teams.length >= 2) ||
-                    (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
+                                       (match?.raw?.matchInfo?.team1 && match?.raw?.matchInfo?.team2);
                   const hasValidId = match?.matchId || match?._id;
                   return hasValidTeams && hasValidId;
                 })
                 .map((match: any) => {
                   const matchActuallyLive = isActuallyLive(match);
-                  const matchActuallyCompleted = isActuallyCompleted(match) ||
-                    match.status === 'Complete' ||
-                    match.status === 'COMPLETED' ||
-                    match.status === 'ABANDONED' ||
-                    match.status === 'CANCELLED' ||
-                    match.status.includes('won') ||
-                    match.status.includes('Win') ||
-                    match.status.includes('win');
+                  const matchActuallyCompleted = isActuallyCompleted(match) || 
+                                    match.status === 'Complete' || 
+                                    match.status === 'COMPLETED' || 
+                                    match.status === 'ABANDONED' || 
+                                    match.status === 'CANCELLED' || 
+                                    match.status.includes('won') || 
+                                    match.status.includes('Win') || 
+                                    match.status.includes('win');
                   const matchActuallyUpcoming = !matchActuallyLive && !matchActuallyCompleted;
 
                   return (
@@ -528,40 +473,23 @@ export async function getServerSideProps() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000';
     console.log('Fetching data from API URL:', apiUrl);
 
-    // Initialize empty arrays
-    let liveMatches = [];
-    let upcomingMatches = [];
-    let recentMatches = [];
+    // Fetch live matches
+    console.log('Fetching live matches...');
+    const liveRes = await axios.get(`${apiUrl}/api/matches/live`);
+    const liveMatches = Array.isArray(liveRes.data) ? liveRes.data : [];
+    console.log('Live matches response count:', liveMatches.length);
 
-    try {
-      // Fetch live matches
-      console.log('Fetching live matches...');
-      const liveRes = await axios.get(`${apiUrl}/api/matches/live`);
-      liveMatches = Array.isArray(liveRes.data) ? liveRes.data : [];
-      console.log('Live matches response count:', liveMatches.length);
-    } catch (liveError) {
-      console.error('Error fetching live matches:', liveError.message);
-    }
+    // Fetch upcoming matches
+    console.log('Fetching upcoming matches...');
+    const upcomingRes = await axios.get(`${apiUrl}/api/matches/upcoming?limit=5`);
+    const upcomingMatches = Array.isArray(upcomingRes.data) ? upcomingRes.data : [];
+    console.log('Upcoming matches response count:', upcomingMatches.length);
 
-    try {
-      // Fetch upcoming matches
-      console.log('Fetching upcoming matches...');
-      const upcomingRes = await axios.get(`${apiUrl}/api/matches/upcoming?limit=5`);
-      upcomingMatches = Array.isArray(upcomingRes.data) ? upcomingRes.data : [];
-      console.log('Upcoming matches response count:', upcomingMatches.length);
-    } catch (upcomingError) {
-      console.error('Error fetching upcoming matches:', upcomingError.message);
-    }
-
-    try {
-      // Fetch recent matches
-      console.log('Fetching recent matches...');
-      const recentRes = await axios.get(`${apiUrl}/api/matches/recent?limit=5`);
-      recentMatches = Array.isArray(recentRes.data) ? recentRes.data : [];
-      console.log('Recent matches response count:', recentMatches.length);
-    } catch (recentError) {
-      console.error('Error fetching recent matches:', recentError.message);
-    }
+    // Fetch recent matches
+    console.log('Fetching recent matches...');
+    const recentRes = await axios.get(`${apiUrl}/api/matches/recent?limit=5`);
+    const recentMatches = Array.isArray(recentRes.data) ? recentRes.data : [];
+    console.log('Recent matches response count:', recentMatches.length);
 
     return {
       props: {
@@ -571,7 +499,7 @@ export async function getServerSideProps() {
       }
     };
   } catch (error) {
-    console.error('General error in getServerSideProps:', error);
+    console.error('Error fetching matches:', error);
     return {
       props: {
         liveMatches: [],

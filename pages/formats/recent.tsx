@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import MatchCard from '../../components/MatchCard';
@@ -41,40 +40,7 @@ const isActuallyCompleted = (match: any) => {
          status === 'CANCELLED';
 };
 
-export default function RecentMatches() {
-  const [matches, setMatches] = useState<Match[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchRecentMatches = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-        const response = await axios.get(`${apiUrl}/api/matches/recent`, { timeout: 10000 });
-        setMatches(Array.isArray(response.data) ? response.data : []);
-      } catch (error) {
-        console.error('Error fetching recent matches:', error);
-        setMatches([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecentMatches();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
-        <Navbar />
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-xl text-gray-300">Loading recent matches...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+export default function RecentMatches({ matches }: { matches: Match[] }) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
       <Navbar />
