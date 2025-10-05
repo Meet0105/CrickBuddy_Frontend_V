@@ -1,34 +1,63 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const LiveScoresDropdown = () => {
   const [liveMatches, setLiveMatches] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // In a real app, this would fetch from an API
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setLiveMatches([
-        {
-          id: 1,
-          team1: { name: 'India', shortName: 'IND', score: '287/4', overs: '45.2' },
-          team2: { name: 'Australia', shortName: 'AUS', score: '145/7', overs: '28.4' },
-          status: 'LIVE',
-          format: 'T20',
-          venue: 'MCG, Melbourne'
-        },
-        {
-          id: 2,
-          team1: { name: 'England', shortName: 'ENG', score: '312/8', overs: '50.0' },
-          team2: { name: 'South Africa', shortName: 'SA', score: '156/3', overs: '22.3' },
-          status: 'LIVE',
-          format: 'ODI',
-          venue: 'Lord\'s, London'
-        }
-      ]);
-      setLoading(false);
-    }, 500);
+    const fetchLiveMatches = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const response = await axios.get(`${apiUrl}/api/matches/live?limit=5`, { 
+          timeout: 8000,
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        
+        const matches = Array.isArray(response.data) ? response.data : [];
+        
+        // Transform the data to match the expected format
+        const transformedMatches = matches.slice(0, 5).map((match: any) => ({
+          id: match.matchId,
+          team1: {
+            name: match.teams?.[0]?.teamName || 'Team 1',
+            shortName: match.teams?.[0]?.teamShortName || 'T1',
+            score: match.teams?.[0]?.score?.runs ? 
+              `${match.teams[0].score.runs}/${match.teams[0].score.wickets}` : 
+              'Yet to bat',
+            overs: match.teams?.[0]?.score?.overs ? 
+              `${match.teams[0].score.overs}` : 
+              '0.0'
+          },
+          team2: {
+            name: match.teams?.[1]?.teamName || 'Team 2',
+            shortName: match.teams?.[1]?.teamShortName || 'T2',
+            score: match.teams?.[1]?.score?.runs ? 
+              `${match.teams[1].score.runs}/${match.teams[1].score.wickets}` : 
+              'Yet to bat',
+            overs: match.teams?.[1]?.score?.overs ? 
+              `${match.teams[1].score.overs}` : 
+              '0.0'
+          },
+          status: match.isLive ? 'LIVE' : match.status,
+          format: match.format || 'Unknown',
+          venue: `${match.venue?.name || 'TBD'}, ${match.venue?.city || ''}`
+        }));
+        
+        setLiveMatches(transformedMatches);
+      } catch (error) {
+        console.error('Error fetching live matches for dropdown:', error);
+        setLiveMatches([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLiveMatches();
   }, []);
 
   return (
@@ -95,19 +124,36 @@ const LiveScoresDropdown = () => {
             </svg>
           </div>
           <p className="text-gray-400 text-sm">No live matches at the moment</p>
+          <Link 
+            href="/formats/upcoming" 
+            className="text-emerald-400 hover:text-emerald-500 font-medium text-xs mt-2 inline-block"
+          >
+            View Upcoming Matches →
+          </Link>
         </div>
       )}
       
       <div className="px-4 py-2 border-t border-slate-700">
-        <Link 
-          href="/formats/live" 
-          className="text-emerald-400 hover:text-emerald-500 font-medium text-sm flex items-center justify-center"
-        >
-          View All Live Matches
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </Link>
+        <div className="flex justify-between items-center text-sm">
+          <Link 
+            href="/formats/live" 
+            className="text-emerald-400 hover:text-emerald-500 font-medium flex items-center"
+          >
+            All Live
+            <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+          <Link 
+            href="/formats/upcoming" 
+            className="text-blue-400 hover:text-blue-500 font-medium flex items-center"
+          >
+            Upcoming
+            <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </div>
   );
