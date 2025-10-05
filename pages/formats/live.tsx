@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import MatchCard from '../../components/MatchCard';
 import Navbar from '../../components/Navbar';
+import DebugInfo from '../../components/DebugInfo';
 
 type Match = any;
 
@@ -31,7 +32,9 @@ export default function LiveMatches() {
   useEffect(() => {
     const fetchLiveMatches = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
+        console.log('🔍 Fetching live matches from:', apiUrl);
+        console.log('🌍 Environment:', process.env.NODE_ENV);
         const response = await axios.get(`${apiUrl}/api/matches/live?t=${Date.now()}`, { 
           timeout: 10000,
           headers: {
@@ -39,9 +42,19 @@ export default function LiveMatches() {
             'Pragma': 'no-cache'
           }
         });
+        
+        console.log('✅ Live matches response:', response.data);
+        console.log('📊 Number of matches:', Array.isArray(response.data) ? response.data.length : 0);
+        
         setMatches(Array.isArray(response.data) ? response.data : []);
-      } catch (error) {
-        console.error('Error fetching live matches:', error);
+      } catch (error: any) {
+        console.error('❌ Error fetching live matches:', error);
+        console.error('❌ Error details:', {
+          message: error.message,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data
+        });
         setMatches([]);
       } finally {
         setLoading(false);
@@ -66,7 +79,9 @@ export default function LiveMatches() {
   }
 
   // Filter out completed matches that are incorrectly marked as live
-  const filteredMatches = matches.filter((match: any) => !isActuallyCompleted(match));
+  const filteredMatches = matches; // Temporarily disabled filtering for debugging
+  console.log('🔍 All matches before filtering:', matches);
+  console.log('🔍 Filtered matches:', filteredMatches);
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
@@ -104,13 +119,14 @@ export default function LiveMatches() {
           )}
         </div>
       </main>
+      <DebugInfo />
     </div>
   )
 }
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     const res = await axios.get(`${apiUrl}/api/matches/live?t=${Date.now()}`, {
       headers: {
         'Cache-Control': 'no-cache',

@@ -48,7 +48,9 @@ export default function UpcomingMatches() {
   useEffect(() => {
     const fetchUpcomingMatches = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
+        console.log('🔍 Fetching upcoming matches from:', apiUrl);
+        console.log('🌍 Environment:', process.env.NODE_ENV);
         const response = await axios.get(`${apiUrl}/api/matches/upcoming`, {
           timeout: 10000,
           headers: {
@@ -56,9 +58,19 @@ export default function UpcomingMatches() {
             'Pragma': 'no-cache'
           }
         });
+        
+        console.log('✅ Upcoming matches response:', response.data);
+        console.log('📊 Number of matches:', Array.isArray(response.data) ? response.data.length : 0);
+        
         setMatches(Array.isArray(response.data) ? response.data : []);
-      } catch (error) {
-        console.error('Error fetching upcoming matches:', error);
+      } catch (error: any) {
+        console.error('❌ Error fetching upcoming matches:', error);
+        console.error('❌ Error details:', {
+          message: error.message,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data
+        });
         setMatches([]);
       } finally {
         setLoading(false);
@@ -83,9 +95,9 @@ export default function UpcomingMatches() {
   }
 
   // Filter out matches that are actually live or completed
-  const filteredMatches = matches.filter((match: any) => {
-    return !isActuallyLive(match) && !isActuallyCompleted(match);
-  });
+  const filteredMatches = matches; // Temporarily disabled filtering for debugging
+  console.log('🔍 All upcoming matches before filtering:', matches);
+  console.log('🔍 Filtered upcoming matches:', filteredMatches);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
@@ -126,7 +138,7 @@ export default function UpcomingMatches() {
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     const res = await axios.get(`${apiUrl}/api/matches/upcoming?limit=20`, {
       headers: {
         'Cache-Control': 'no-cache',
