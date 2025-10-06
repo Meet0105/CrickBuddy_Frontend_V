@@ -1,0 +1,35 @@
+{
+  "matchId": "121450",
+  "title": "2nd Match",
+  "status": "LIVE",
+  "format": "ODI",
+  "series": {
+    "name": "ICC Womens World Cup 2025"
+  },
+  "teams": [
+    {
+      "teamId": "100",
+      "teamName": "Australia Women",
+      "teamShortName": "AUSW",
+      "score": {
+        "runs": 237,
+        "wickets": 10,
+        "overs": 43.2,
+        "balls": 0,
+        "runRate": 5.47
+      }
+    },
+    {
+      "teamId": "98",
+      "teamName": "New Zealand Women",
+      "teamShortName": "NZW",
+      "score": {
+        "runs": 326,
+        "wickets": 10,
+        "overs": 49.3,
+        "balls": 0,
+        "runRate": 6.59
+      }
+    }
+  ]
+}

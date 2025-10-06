@@ -26,11 +26,27 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, isLive, isUpcoming, isComp
                      (match?.raw?.matchInfo?.[`team${teamIndex + 1}`]?.teamSName) ||
                      `Team ${teamIndex + 1}`;
     
-    // Extract score with comprehensive fallbacks
-    const score = team.score || 
-                  match?.raw?.matchScore?.[`team${teamIndex + 1}Score`] ||
-                  match?.raw?.matchScore?.scoreData?.[teamIndex] ||
-                  { runs: 0, wickets: 0, overs: 0, balls: 0, runRate: 0 };
+    // Extract score with comprehensive fallbacks - FIXED to properly check for score object
+    let score = { runs: 0, wickets: 0, overs: 0, balls: 0, runRate: 0 };
+    
+    if (team.score && typeof team.score === 'object') {
+      score = {
+        runs: team.score.runs || 0,
+        wickets: team.score.wickets || 0,
+        overs: team.score.overs || 0,
+        balls: team.score.balls || 0,
+        runRate: team.score.runRate || 0
+      };
+    } else if (match?.raw?.matchScore?.[`team${teamIndex + 1}Score`]) {
+      const rawScore = match.raw.matchScore[`team${teamIndex + 1}Score`];
+      score = {
+        runs: rawScore.runs || 0,
+        wickets: rawScore.wickets || 0,
+        overs: rawScore.overs || 0,
+        balls: rawScore.balls || 0,
+        runRate: rawScore.runRate || 0
+      };
+    }
     
     return { ...team, teamName, score };
   };
@@ -41,23 +57,19 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, isLive, isUpcoming, isComp
   const team1Name = team1.teamName;
   const team2Name = team2.teamName;
   
-  // Make sure we always have score objects with default values
-  const team1Score = (team1 && team1.score) || { runs: 0, wickets: 0, overs: 0, balls: 0, runRate: 0 };
-  const team2Score = (team2 && team2.score) || { runs: 0, wickets: 0, overs: 0, balls: 0, runRate: 0 };
-  
-  // Ensure score values are numbers
+  // Use the scores directly from extracted team data
   const normalizedTeam1Score = {
-    runs: typeof team1Score.runs === 'number' ? team1Score.runs : 0,
-    wickets: typeof team1Score.wickets === 'number' ? team1Score.wickets : 0,
-    overs: typeof team1Score.overs === 'number' ? team1Score.overs : 0,
-    runRate: typeof team1Score.runRate === 'number' ? team1Score.runRate : 0
+    runs: team1.score.runs,
+    wickets: team1.score.wickets,
+    overs: team1.score.overs,
+    runRate: team1.score.runRate
   };
   
   const normalizedTeam2Score = {
-    runs: typeof team2Score.runs === 'number' ? team2Score.runs : 0,
-    wickets: typeof team2Score.wickets === 'number' ? team2Score.wickets : 0,
-    overs: typeof team2Score.overs === 'number' ? team2Score.overs : 0,
-    runRate: typeof team2Score.runRate === 'number' ? team2Score.runRate : 0
+    runs: team2.score.runs,
+    wickets: team2.score.wickets,
+    overs: team2.score.overs,
+    runRate: team2.score.runRate
   };
   
   // Enhanced title extraction with multiple fallbacks
@@ -171,18 +183,25 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, isLive, isUpcoming, isComp
   
   // Determine if we should show scores based on multiple conditions
   const shouldShowScores = () => {
+    // Always show scores if match is live or completed
     if (actualIsLive) return true;
     if (actualIsCompleted) return true;
+    
+    // Check status string for completed matches
     if (status && (status.includes('Complete') || status.includes('complete') || 
                    status.includes('Won') || status.includes('won') || 
                    status.includes('Finished') || status.includes('finished') ||
                    status.includes('COMPLETED'))) {
       return true;
     }
+    
+    // Show scores if any team has runs or wickets (match has started)
     if ((normalizedTeam1Score.runs > 0) || (normalizedTeam1Score.wickets > 0) ||
         (normalizedTeam2Score.runs > 0) || (normalizedTeam2Score.wickets > 0)) {
       return true;
     }
+    
+    // Don't show scores for upcoming matches
     return false;
   };
   
