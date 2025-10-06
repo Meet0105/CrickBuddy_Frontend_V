@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { fallbackFilters, getFallbackRecords } from './recordsHelpers';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
 
 // Fetch records filters
 export const fetchRecordsFilters = async () => {

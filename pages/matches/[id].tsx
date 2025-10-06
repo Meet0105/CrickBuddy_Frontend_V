@@ -258,7 +258,7 @@ export default function MatchDetails({ match, matchId }: any) {
 export async function getServerSideProps({ params }: any) {
   try {
     const { id } = params;
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     
     console.log('Fetching match data for ID:', id);
     const res = await axios.get(`${apiUrl}/api/matches/${id}`);

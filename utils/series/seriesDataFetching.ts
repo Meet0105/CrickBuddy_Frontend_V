@@ -2,7 +2,7 @@ import axios from 'axios';
 import api from '../../utils/api';
 import { Series } from './seriesTypes';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
 
 // Fetch series details
 export const fetchSeriesDetails = async (seriesId: string): Promise<Series | null> => {

@@ -59,7 +59,7 @@ export default function TrendingPlayers({ players }: { players: Player[] }) {
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     
     // Fetch trending players
     const res = await axios.get(`${apiUrl}/api/players/trending`);

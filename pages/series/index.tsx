@@ -95,7 +95,7 @@ export default function SeriesPage({ series }: { series: Series[] }) {
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     
     // First try to get from database
     const res = await axios.get(`${apiUrl}/api/series`);

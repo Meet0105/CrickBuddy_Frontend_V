@@ -59,7 +59,7 @@ export default function Venues({ venues }: { venues: Venue[] }) {
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     // For now, we'll use placeholder data since we don't have a direct list endpoint
     // In a real implementation, you would fetch this from your API
     const venues = [

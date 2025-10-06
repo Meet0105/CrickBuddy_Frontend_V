@@ -115,7 +115,7 @@ export default function NewsCategory({ news, category, error }: { news: NewsItem
 
 export async function getServerSideProps({ params }: { params: { id: string } }) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     
     // Fetch news by category
     const newsRes = await axios.get(`${apiUrl}/api/news/category-id/${params.id}`);

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 
 type Player = {
@@ -11,9 +10,8 @@ type Player = {
   country: string;
 };
 
-export default function SearchPlayers({ initialPlayers }: { initialPlayers: Player[] }) {
-  const router = useRouter();
-  const { plrN } = router.query;
+export default function SearchPlayers({ initialPlayers, query }: { initialPlayers: Player[], query: any }) {
+  const { plrN } = query;
   const [searchTerm, setSearchTerm] = useState(plrN?.toString() || '');
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const [loading, setLoading] = useState(false);
@@ -24,7 +22,7 @@ export default function SearchPlayers({ initialPlayers }: { initialPlayers: Play
     
     setLoading(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
       const res = await axios.get(`${apiUrl}/api/players/search?plrN=${encodeURIComponent(searchTerm)}`);
       const searchResults = Array.isArray(res.data) ? res.data : res.data.players || [];
       setPlayers(searchResults);
@@ -102,16 +100,16 @@ export async function getServerSideProps({ query }: { query: { plrN?: string } }
   try {
     const { plrN } = query;
     if (!plrN) {
-      return { props: { initialPlayers: [] } };
+      return { props: { initialPlayers: [], query } };
     }
     
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     const res = await axios.get(`${apiUrl}/api/players/search?plrN=${encodeURIComponent(plrN)}`);
     const players = Array.isArray(res.data) ? res.data : res.data.players || [];
     
-    return { props: { initialPlayers: players } };
+    return { props: { initialPlayers: players, query } };
   } catch (error) {
     console.error('Error searching players:', error);
-    return { props: { initialPlayers: [] } };
+    return { props: { initialPlayers: [], query } };
   }
 }

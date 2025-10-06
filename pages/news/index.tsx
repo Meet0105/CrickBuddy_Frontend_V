@@ -99,7 +99,7 @@ export default function News({ news, categories, error }: { news: NewsItem[]; ca
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     
     // Fetch news
     const newsRes = await axios.get(`${apiUrl}/api/news?limit=10`);

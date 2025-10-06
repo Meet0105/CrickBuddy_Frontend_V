@@ -92,7 +92,7 @@ export default function Teams({ teams }: { teams: Team[] }) {
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     console.log('Fetching teams from:', `${apiUrl}/api/teams`);
     const res = await axios.get(`${apiUrl}/api/teams`);
     console.log('Teams API response count:', res.data?.length || 0);

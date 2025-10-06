@@ -115,7 +115,7 @@ export default function VenueDetails({ venue, matches, stats }: {
 
 export async function getServerSideProps({ params }: { params: { id: string } }) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     
     // Fetch venue info
     let venueInfo: any = null;

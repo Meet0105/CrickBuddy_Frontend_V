@@ -69,7 +69,7 @@ export default function LiveMatches({ matches }: { matches: Match[] }) {
 
 export async function getServerSideProps() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
     const res = await axios.get(`${apiUrl}/api/matches/live`);
     const matches = Array.isArray(res.data) ? res.data : [];
     return { props: { matches } };

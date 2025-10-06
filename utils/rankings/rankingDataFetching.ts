@@ -6,7 +6,7 @@ import {
   fallbackPlayerRankings 
 } from './rankingHelpers';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://crick-buddy-backend-v.vercel.app';
 
 // Fetch team rankings with individual error handling
 export const fetchTeamRankings = async () => {
