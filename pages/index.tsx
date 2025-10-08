@@ -50,8 +50,8 @@ export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-100 w-full overflow-x-hidden">
       {/* Navbar */}
       <Navbar />
-      {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-black w-full">
+        {/* Hero Section */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-black w-full">
         {/* Neon circle overlay - hidden on mobile to prevent overflow */}
         <div className="absolute inset-0 opacity-10 hidden sm:block">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 border-4 border-emerald-400/30 rounded-full"></div>
