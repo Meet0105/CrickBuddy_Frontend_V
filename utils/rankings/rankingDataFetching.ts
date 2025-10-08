@@ -14,21 +14,21 @@ export const fetchTeamRankings = async () => {
   let t20DataError = '';
   
   try {
-    testTeamRes = await axios.get(`${apiUrl}/api/rankings/icc-standings/1`);
+    testTeamRes = await axios.get(`${apiUrl}/api/rankings/icc-standings/1`, { timeout: 8000 });
   } catch (error) {
     console.error('Error fetching test team standings:', error);
     testTeamRes = { data: null };
   }
   
   try {
-    odiTeamRes = await axios.get(`${apiUrl}/api/rankings/icc-standings/2`);
+    odiTeamRes = await axios.get(`${apiUrl}/api/rankings/icc-standings/2`, { timeout: 8000 });
   } catch (error) {
     console.error('Error fetching ODI team standings:', error);
     odiTeamRes = { data: null };
   }
   
   try {
-    t20TeamRes = await axios.get(`${apiUrl}/api/rankings/icc-standings/3`);
+    t20TeamRes = await axios.get(`${apiUrl}/api/rankings/icc-standings/3`, { timeout: 8000 });
   } catch (error: any) {
     console.error('Error fetching T20 team standings:', error);
     t20TeamRes = { data: null };

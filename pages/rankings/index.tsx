@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
@@ -7,16 +8,16 @@ import { PlayerRankingsTable } from '../../components/rankings/PlayerRankingsTab
 import { fetchAllRankings } from '../../utils/rankings/rankingDataFetching';
 
 export default function Rankings({ 
-  testTeamRankings, 
-  odiTeamRankings, 
-  t20TeamRankings,
-  testBatsmenRankings,
-  odiBatsmenRankings,
-  t20BatsmenRankings,
-  testBowlersRankings,
-  odiBowlersRankings,
-  t20BowlersRankings,
-  t20DataError
+  testTeamRankings: initialTestTeamRankings, 
+  odiTeamRankings: initialOdiTeamRankings, 
+  t20TeamRankings: initialT20TeamRankings,
+  testBatsmenRankings: initialTestBatsmenRankings,
+  odiBatsmenRankings: initialOdiBatsmenRankings,
+  t20BatsmenRankings: initialT20BatsmenRankings,
+  testBowlersRankings: initialTestBowlersRankings,
+  odiBowlersRankings: initialOdiBowlersRankings,
+  t20BowlersRankings: initialT20BowlersRankings,
+  t20DataError: initialT20DataError
 }: { 
   testTeamRankings: TeamRanking[]; 
   odiTeamRankings: TeamRanking[]; 
@@ -29,6 +30,44 @@ export default function Rankings({
   t20BowlersRankings: PlayerRanking[];
   t20DataError?: string;
 }) {
+  // Client-side state for rankings data
+  const [testTeamRankings, setTestTeamRankings] = useState<TeamRanking[]>(initialTestTeamRankings);
+  const [odiTeamRankings, setOdiTeamRankings] = useState<TeamRanking[]>(initialOdiTeamRankings);
+  const [t20TeamRankings, setT20TeamRankings] = useState<TeamRanking[]>(initialT20TeamRankings);
+  const [testBatsmenRankings, setTestBatsmenRankings] = useState<PlayerRanking[]>(initialTestBatsmenRankings);
+  const [odiBatsmenRankings, setOdiBatsmenRankings] = useState<PlayerRanking[]>(initialOdiBatsmenRankings);
+  const [t20BatsmenRankings, setT20BatsmenRankings] = useState<PlayerRanking[]>(initialT20BatsmenRankings);
+  const [testBowlersRankings, setTestBowlersRankings] = useState<PlayerRanking[]>(initialTestBowlersRankings);
+  const [odiBowlersRankings, setOdiBowlersRankings] = useState<PlayerRanking[]>(initialOdiBowlersRankings);
+  const [t20BowlersRankings, setT20BowlersRankings] = useState<PlayerRanking[]>(initialT20BowlersRankings);
+  const [t20DataError, setT20DataError] = useState<string | undefined>(initialT20DataError);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch rankings data client-side
+  useEffect(() => {
+    const loadRankings = async () => {
+      try {
+        const data = await fetchAllRankings();
+        setTestTeamRankings(data.testTeamRankings);
+        setOdiTeamRankings(data.odiTeamRankings);
+        setT20TeamRankings(data.t20TeamRankings);
+        setTestBatsmenRankings(data.testBatsmenRankings);
+        setOdiBatsmenRankings(data.odiBatsmenRankings);
+        setT20BatsmenRankings(data.t20BatsmenRankings);
+        setTestBowlersRankings(data.testBowlersRankings);
+        setOdiBowlersRankings(data.odiBowlersRankings);
+        setT20BowlersRankings(data.t20BowlersRankings);
+        setT20DataError(data.t20DataError);
+      } catch (error) {
+        console.error('Error loading rankings:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRankings();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 w-full overflow-x-hidden">
       <Navbar />
@@ -169,28 +208,21 @@ export default function Rankings({
   )
 }
 
-export async function getServerSideProps() {
-  try {
-    const rankingsData = await fetchAllRankings();
-    
-    return { 
-      props: rankingsData
-    };
-  } catch (error) {
-    console.error('Error fetching rankings:', error);
-    return { 
-      props: { 
-        testTeamRankings: [], 
-        odiTeamRankings: [], 
-        t20TeamRankings: [],
-        testBatsmenRankings: [],
-        odiBatsmenRankings: [],
-        t20BatsmenRankings: [],
-        testBowlersRankings: [],
-        odiBowlersRankings: [],
-        t20BowlersRankings: [],
-        t20DataError: 'An error occurred while fetching rankings data. Please try again later.'
-      } 
-    };
-  }
+// Use static props instead of server-side props to avoid Vercel timeout
+export async function getStaticProps() {
+  // Return empty data initially, will be fetched client-side
+  return { 
+    props: { 
+      testTeamRankings: [], 
+      odiTeamRankings: [], 
+      t20TeamRankings: [],
+      testBatsmenRankings: [],
+      odiBatsmenRankings: [],
+      t20BatsmenRankings: [],
+      testBowlersRankings: [],
+      odiBowlersRankings: [],
+      t20BowlersRankings: [],
+    },
+    revalidate: 3600 // Revalidate every hour
+  };
 }
