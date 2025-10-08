@@ -47,7 +47,19 @@ export default function Rankings({
   useEffect(() => {
     const loadRankings = async () => {
       try {
+        console.log('🔄 Fetching rankings data...');
         const data = await fetchAllRankings();
+        console.log('✅ Rankings data received:', {
+          testTeam: data.testTeamRankings.length,
+          odiTeam: data.odiTeamRankings.length,
+          t20Team: data.t20TeamRankings.length,
+          testBatsmen: data.testBatsmenRankings.length,
+          odiBatsmen: data.odiBatsmenRankings.length,
+          t20Batsmen: data.t20BatsmenRankings.length,
+          testBowlers: data.testBowlersRankings.length,
+          odiBowlers: data.odiBowlersRankings.length,
+          t20Bowlers: data.t20BowlersRankings.length
+        });
         setTestTeamRankings(data.testTeamRankings);
         setOdiTeamRankings(data.odiTeamRankings);
         setT20TeamRankings(data.t20TeamRankings);
@@ -59,7 +71,7 @@ export default function Rankings({
         setT20BowlersRankings(data.t20BowlersRankings);
         setT20DataError(data.t20DataError);
       } catch (error) {
-        console.error('Error loading rankings:', error);
+        console.error('❌ Error loading rankings:', error);
       } finally {
         setLoading(false);
       }
