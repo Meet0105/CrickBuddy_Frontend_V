@@ -6,9 +6,9 @@ import { TeamRankingsTable } from '../../components/rankings/TeamRankingsTable';
 import { PlayerRankingsTable } from '../../components/rankings/PlayerRankingsTable';
 import { fetchAllWomenRankings } from '../../utils/rankings/womenRankingData';
 
-export default function WomenRankings({ 
-  testTeamRankings, 
-  odiTeamRankings, 
+export default function WomenRankings({
+  testTeamRankings,
+  odiTeamRankings,
   t20TeamRankings,
   testBatsmenRankings,
   odiBatsmenRankings,
@@ -16,10 +16,10 @@ export default function WomenRankings({
   testBowlersRankings,
   odiBowlersRankings,
   t20BowlersRankings
-}: { 
-  testTeamRankings: TeamRanking[]; 
-  odiTeamRankings: TeamRanking[]; 
-  t20TeamRankings: TeamRanking[]; 
+}: {
+  testTeamRankings: TeamRanking[];
+  odiTeamRankings: TeamRanking[];
+  t20TeamRankings: TeamRanking[];
   testBatsmenRankings: PlayerRanking[];
   odiBatsmenRankings: PlayerRanking[];
   t20BatsmenRankings: PlayerRanking[];
@@ -30,7 +30,7 @@ export default function WomenRankings({
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 w-full overflow-x-hidden">
       <Navbar />
-      
+
       <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 lg:mb-10 gap-3 sm:gap-4">
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-green-400 flex items-center">
@@ -46,7 +46,7 @@ export default function WomenRankings({
             Men's Rankings
           </Link>
         </div>
-        
+
         <div className="space-y-6 sm:space-y-8 lg:space-y-10">
           {/* Team Rankings Section */}
           <div>
@@ -56,28 +56,28 @@ export default function WomenRankings({
               </svg>
               Team Rankings
             </h2>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-              <TeamRankingsTable 
-                title="Test Rankings" 
-                rankings={testTeamRankings} 
-                format="Test" 
+              <TeamRankingsTable
+                title="Test Rankings"
+                rankings={testTeamRankings}
+                format="Test"
               />
-              
-              <TeamRankingsTable 
-                title="ODI Rankings" 
-                rankings={odiTeamRankings} 
-                format="ODI" 
+
+              <TeamRankingsTable
+                title="ODI Rankings"
+                rankings={odiTeamRankings}
+                format="ODI"
               />
-              
-              <TeamRankingsTable 
-                title="T20 Rankings" 
-                rankings={t20TeamRankings} 
-                format="T20" 
+
+              <TeamRankingsTable
+                title="T20 Rankings"
+                rankings={t20TeamRankings}
+                format="T20"
               />
             </div>
           </div>
-          
+
           {/* Batsmen Rankings Section */}
           <div>
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-green-400 mb-4 sm:mb-6 flex items-center">
@@ -86,31 +86,31 @@ export default function WomenRankings({
               </svg>
               Batsmen Rankings
             </h2>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-              <PlayerRankingsTable 
-                title="Test Batsmen" 
-                rankings={testBatsmenRankings} 
-                format="Test" 
-                category="batsmen" 
+              <PlayerRankingsTable
+                title="Test Batsmen"
+                rankings={testBatsmenRankings}
+                format="Test"
+                category="batsmen"
               />
-              
-              <PlayerRankingsTable 
-                title="ODI Batsmen" 
-                rankings={odiBatsmenRankings} 
-                format="ODI" 
-                category="batsmen" 
+
+              <PlayerRankingsTable
+                title="ODI Batsmen"
+                rankings={odiBatsmenRankings}
+                format="ODI"
+                category="batsmen"
               />
-              
-              <PlayerRankingsTable 
-                title="T20 Batsmen" 
-                rankings={t20BatsmenRankings} 
-                format="T20" 
-                category="batsmen" 
+
+              <PlayerRankingsTable
+                title="T20 Batsmen"
+                rankings={t20BatsmenRankings}
+                format="T20"
+                category="batsmen"
               />
             </div>
           </div>
-          
+
           {/* Bowlers Rankings Section */}
           <div>
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-green-400 mb-4 sm:mb-6 flex items-center">
@@ -119,27 +119,27 @@ export default function WomenRankings({
               </svg>
               Bowlers Rankings
             </h2>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-              <PlayerRankingsTable 
-                title="Test Bowlers" 
-                rankings={testBowlersRankings} 
-                format="Test" 
-                category="bowlers" 
+              <PlayerRankingsTable
+                title="Test Bowlers"
+                rankings={testBowlersRankings}
+                format="Test"
+                category="bowlers"
               />
-              
-              <PlayerRankingsTable 
-                title="ODI Bowlers" 
-                rankings={odiBowlersRankings} 
-                format="ODI" 
-                category="bowlers" 
+
+              <PlayerRankingsTable
+                title="ODI Bowlers"
+                rankings={odiBowlersRankings}
+                format="ODI"
+                category="bowlers"
               />
-              
-              <PlayerRankingsTable 
-                title="T20 Bowlers" 
-                rankings={t20BowlersRankings} 
-                format="T20" 
-                category="bowlers" 
+
+              <PlayerRankingsTable
+                title="T20 Bowlers"
+                rankings={t20BowlersRankings}
+                format="T20"
+                category="bowlers"
               />
             </div>
           </div>
@@ -152,16 +152,16 @@ export default function WomenRankings({
 export async function getServerSideProps() {
   try {
     const rankingsData = await fetchAllWomenRankings();
-    
-    return { 
+
+    return {
       props: rankingsData
     };
   } catch (error) {
     console.error('Error fetching women rankings:', error);
-    return { 
-      props: { 
-        testTeamRankings: [], 
-        odiTeamRankings: [], 
+    return {
+      props: {
+        testTeamRankings: [],
+        odiTeamRankings: [],
         t20TeamRankings: [],
         testBatsmenRankings: [],
         odiBatsmenRankings: [],
@@ -169,7 +169,7 @@ export async function getServerSideProps() {
         testBowlersRankings: [],
         odiBowlersRankings: [],
         t20BowlersRankings: []
-      } 
+      }
     };
   }
 }

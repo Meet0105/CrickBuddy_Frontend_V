@@ -51,7 +51,8 @@ export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
       {/* Navbar */}
       <Navbar />
         {/* Hero Section */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-black w-full">
+        <div className="relative w-full">
+        <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-black pb-24">
         {/* Neon circle overlay - hidden on mobile to prevent overflow */}
         <div className="absolute inset-0 opacity-10 hidden sm:block">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 border-4 border-emerald-400/30 rounded-full"></div>
@@ -99,14 +100,14 @@ export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
         </div>
 
         {/* Neon cricket ball - hidden on mobile */}
-        <div className="absolute bottom-4 right-4 sm:bottom-10 sm:right-10 w-12 h-12 sm:w-16 sm:h-16 opacity-30 hidden sm:block">
+        <div className="absolute bottom-24 right-4 sm:right-10 w-12 h-12 sm:w-16 sm:h-16 opacity-30 hidden sm:block">
           <div className="w-full h-full bg-gradient-to-br from-cyan-400 to-violet-500 rounded-full animate-bounce"></div>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full overflow-hidden">
-        {/* Quick Stats Cards */}
-        <section className="mb-16 -mt-16 relative">
+        {/* Quick Stats Cards - positioned to overlap hero */}
+        <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 -mt-20">
+          <section className="mb-16">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
             <div className="group bg-slate-800/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 lg:p-8 text-center hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-slate-700/50 hover:border-red-500/30 active:scale-95">
               <div className="relative mb-3 sm:mb-4 lg:mb-6">
@@ -162,6 +163,10 @@ export default function Home({ liveMatches, upcomingMatches, recentMatches }: {
             </div>
           </div>
         </section>
+        </div>
+      </div>
+
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full overflow-hidden">
 
         {/* Live Matches Section */}
         <section className="mb-8 sm:mb-12 lg:mb-16">
