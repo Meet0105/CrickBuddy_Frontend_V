@@ -25,14 +25,14 @@ const SeriesPointsTable: React.FC<SeriesPointsTableProps> = ({ pointsTable, seri
   
   if (!pointsTable || pointsTable.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center text-gray-500 dark:text-gray-400">
+      <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow p-4 sm:p-6 text-center text-gray-500 dark:text-gray-400">
         <div className="text-gray-500 dark:text-gray-400 mb-4">
-          <svg className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          <svg className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No Points Table Available</h3>
-        <p className="text-gray-500 dark:text-gray-400">
+        <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No Points Table Available</h3>
+        <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
           Points table data is not available for this series yet.
         </p>
       </div>
@@ -47,47 +47,47 @@ const SeriesPointsTable: React.FC<SeriesPointsTableProps> = ({ pointsTable, seri
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Points Table Header */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Points Table</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300">{seriesName}</p>
+      <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow p-3 sm:p-4">
+        <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 dark:text-gray-100 mb-1 sm:mb-2">Points Table</h3>
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 truncate">{seriesName}</p>
       </div>
 
       {/* Points Table */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow overflow-hidden">
+        <div className="overflow-x-auto -mx-3 sm:mx-0 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider sticky left-0 bg-gray-50 dark:bg-gray-700 z-10">
                   Pos
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Team
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   P
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   W
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   L
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   T
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   NR
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Pts
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   NRR
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Form
                 </th>
               </tr>
@@ -95,9 +95,9 @@ const SeriesPointsTable: React.FC<SeriesPointsTableProps> = ({ pointsTable, seri
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {sortedTable.map((team, index) => (
                 <tr key={team.teamId} className={index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700'}>
-                  <td className="px-4 py-3 whitespace-nowrap">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap sticky left-0 bg-inherit z-10">
                     <div className="flex items-center">
-                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                      <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                         team.position <= 2 ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' :
                         team.position <= 4 ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' :
                         'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
@@ -106,46 +106,46 @@ const SeriesPointsTable: React.FC<SeriesPointsTableProps> = ({ pointsTable, seri
                       </span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-3">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-green-800 dark:text-green-200 font-bold text-xs">
                           {team.teamShortName || team.teamName.substring(0, 3).toUpperCase()}
                         </span>
                       </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{team.teamName}</div>
+                      <div className="min-w-0">
+                        <div className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{team.teamName}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center text-sm font-medium text-gray-900 dark:text-gray-100">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">
                     {team.played || 0}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center text-sm font-medium text-green-600 dark:text-green-400">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center text-xs sm:text-sm font-medium text-green-600 dark:text-green-400">
                     {team.won || 0}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center text-sm font-medium text-red-600 dark:text-red-400">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center text-xs sm:text-sm font-medium text-red-600 dark:text-red-400">
                     {team.lost || 0}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-500 dark:text-gray-300">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center text-xs sm:text-sm text-gray-500 dark:text-gray-300">
                     {team.tied || 0}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-500 dark:text-gray-300">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center text-xs sm:text-sm text-gray-500 dark:text-gray-300">
                     {team.noResult || 0}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center text-sm font-bold text-gray-900 dark:text-gray-100">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100">
                     {team.points || 0}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-900 dark:text-gray-100">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center text-xs sm:text-sm text-gray-900 dark:text-gray-100">
                     {team.netRunRate ? parseFloat(team.netRunRate.toString()).toFixed(3) : '0.000'}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-center">
-                    <div className="flex justify-center space-x-1">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 whitespace-nowrap text-center">
+                    <div className="flex justify-center gap-1">
                       {team.form && team.form.length > 0 ? (
                         team.form.slice(-5).map((result, idx) => (
                           <span
                             key={idx}
-                            className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+                            className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-xs font-bold ${
                               result === 'W' ? 'bg-green-500 dark:bg-green-700 text-white' :
                               result === 'L' ? 'bg-red-500 dark:bg-red-700 text-white' :
                               result === 'T' ? 'bg-yellow-500 dark:bg-yellow-700 text-white' :
@@ -168,9 +168,9 @@ const SeriesPointsTable: React.FC<SeriesPointsTableProps> = ({ pointsTable, seri
       </div>
 
       {/* Legend */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Legend</h4>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+      <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow p-3 sm:p-4">
+        <h4 className="text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100 mb-2 sm:mb-3">Legend</h4>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
           <div><strong>P:</strong> Played</div>
           <div><strong>W:</strong> Won</div>
           <div><strong>L:</strong> Lost</div>

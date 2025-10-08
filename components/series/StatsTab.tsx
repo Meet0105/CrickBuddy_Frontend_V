@@ -39,17 +39,17 @@ export const StatsTab: React.FC<StatsTabProps> = ({ seriesData, fetchSeriesData 
             <thead className="bg-gray-800">
               <tr>
                 {(seriesData.t20StatsList || seriesData.odiStatsList || seriesData.testStatsList)?.headers?.map((header: string, index: number) => (
-                  <th key={index} className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th key={index} className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="bg-gray-900 divide-y divide-gray-700">
+            <tbody className="bg-gray-900/50 divide-y divide-gray-700/30">
               {(seriesData.t20StatsList || seriesData.odiStatsList || seriesData.testStatsList)?.values?.map((player: any, index: number) => (
-                <tr key={index} className="hover:bg-gray-800 transition-colors">
+                <tr key={index} className="hover:bg-gray-800/50 transition-colors duration-150">
                   {player.values?.map((value: string, valueIndex: number) => (
-                    <td key={valueIndex} className="px-6 py-4 whitespace-nowrap text-sm text-gray-100">
+                    <td key={valueIndex} className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-xs sm:text-sm md:text-base text-gray-100">
                       {value}
                     </td>
                   ))}
@@ -59,7 +59,7 @@ export const StatsTab: React.FC<StatsTabProps> = ({ seriesData, fetchSeriesData 
           </table>
         </div>
       ) : (
-        <p className="text-gray-400 italic">No statistics data available.</p>
+        <p className="text-sm sm:text-base text-gray-400 italic text-center p-4 sm:p-6">No statistics data available.</p>
       )}
     </div>
   );

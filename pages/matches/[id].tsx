@@ -161,7 +161,6 @@ export default function MatchDetails({ match, matchId }: any) {
         fetchHistoricalScorecard();
       }
     } else if (activeTab === 'commentary' && !commentary) {
-      fetchCommentary();
     } else if (activeTab === 'overs' && !overs) {
       fetchOvers();
     }
@@ -169,13 +168,13 @@ export default function MatchDetails({ match, matchId }: any) {
 
   if (!match && !matchInfo) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-950 to-black text-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-100 w-full overflow-x-hidden">
         <Navbar />
-        <main className="max-w-4xl mx-auto px-4 py-8">
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center border border-gray-200 dark:border-gray-700">
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Match Not Found</h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">Sorry, we couldn't find the match you're looking for.</p>
-            <Link href="/" className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition">
+        <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
+          <div className="bg-slate-800/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-8 sm:p-12 text-center border border-slate-700">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-100 mb-4">Match Not Found</h1>
+            <p className="text-sm sm:text-base text-gray-400 mb-6">Sorry, we couldn't find the match you're looking for.</p>
+            <Link href="/" className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl inline-block transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
               Back to Home
             </Link>
           </div>
@@ -185,14 +184,14 @@ export default function MatchDetails({ match, matchId }: any) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-950 to-black text-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-100 w-full overflow-x-hidden">
       <Navbar />
-      <main className="max-w-6xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         {/* Breadcrumb */}
-        <nav className="mb-6 text-sm text-gray-400 dark:text-gray-500">
-          <Link href="/" className="text-green-600 hover:text-green-500">Home</Link>
-          <span className="text-gray-500 dark:text-gray-600 mx-2">/</span>
-          <span className="text-gray-500 dark:text-gray-400">Match Details</span>
+        <nav className="mb-4 sm:mb-6 text-xs sm:text-sm text-gray-400">
+          <Link href="/" className="text-emerald-400 hover:text-emerald-300 transition-colors">Home</Link>
+          <span className="text-gray-600 mx-2">/</span>
+          <span className="text-gray-400">Match Details</span>
         </nav>
         
         {/* Match Header */}

@@ -46,7 +46,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
     const extras = ball.extras || 0;
     const totalRuns = ball.totalRuns || runs + extras;
     
-    let ballClass = "w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm ";
+    let ballClass = "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shadow-sm ";
     
     if (ball.wicket) {
       ballClass += "bg-gradient-to-br from-red-500 to-red-600 text-white border-2 border-red-700";
@@ -63,11 +63,11 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
     }
 
     return (
-      <div key={ballIndex} className="flex flex-col items-center space-y-1">
+      <div key={ballIndex} className="flex flex-col items-center gap-1">
         <div className={ballClass} title={ball.commentary || `${totalRuns} runs`}>
           {ball.wicket ? 'W' : totalRuns}
         </div>
-        <span className="text-xs text-gray-400 font-medium">{ballIndex + 1}</span>
+        <span className="text-xs sm:text-sm text-gray-400 font-medium">{ballIndex + 1}</span>
       </div>
     );
   };
@@ -79,7 +79,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
     const overWickets = over.wickets || balls.filter(ball => ball.wicket).length;
 
     return (
-      <div key={overIndex} className="bg-slate-800 rounded-2xl shadow-lg p-5 mb-5 border border-slate-700 hover:shadow-xl transition-shadow">
+      <div key={overIndex} className="bg-slate-800/95 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 md:mb-5 border border-slate-700/50 hover:shadow-xl transition-shadow">
         <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-700">
           <h4 className="font-bold text-white text-lg">
             Over {over.overNumber || overIndex + 1}
@@ -96,7 +96,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
           </div>
         </div>
         
-        <div className="flex justify-between items-center mb-4 text-sm text-gray-300 bg-slate-900 p-3 rounded-xl">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3 sm:mb-4 text-xs sm:text-sm text-gray-300 bg-slate-900 p-2 sm:p-3 rounded-lg sm:rounded-xl">
           <div className="flex items-center">
             <span className="font-medium text-gray-300 mr-2">Bowler:</span>
             <span className="font-bold text-blue-400">{over.bowler || 'Unknown'}</span>
@@ -107,7 +107,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
           </div>
         </div>
         
-        <div className="flex space-x-3 justify-center py-4">
+        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center py-3 sm:py-4">
           {balls.map((ball, ballIndex) => renderBall(ball, ballIndex))}
           {/* Fill empty balls if less than 6 */}
           {Array.from({ length: Math.max(0, 6 - balls.length) }).map((_, emptyIndex) => (
@@ -115,7 +115,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
               <div className="w-10 h-10 rounded-full border-2 border-dashed border-gray-600 flex items-center justify-center">
                 <span className="text-gray-500">-</span>
               </div>
-              <span className="text-xs text-gray-500 font-medium">{balls.length + emptyIndex + 1}</span>
+              <span className="text-xs sm:text-sm text-gray-500 font-medium">{balls.length + emptyIndex + 1}</span>
             </div>
           ))}
         </div>
@@ -126,7 +126,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
             <h5 className="font-bold text-white mb-3">Ball-by-Ball Details:</h5>
             <div className="space-y-2 max-h-40 overflow-y-auto">
               {balls.map((ball, ballIndex) => (
-                <div key={ballIndex} className="text-sm text-gray-200 flex justify-between items-center p-2 hover:bg-slate-700 rounded-lg">
+                <div key={ballIndex} className="text-xs sm:text-sm text-gray-200 flex justify-between items-center p-1.5 sm:p-2 hover:bg-slate-700 rounded-lg">
                   <span className="font-medium">Ball {ballIndex + 1}:</span>
                   <span>
                     {ball.wicket ? (
@@ -151,14 +151,14 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
 
   if (oversData.length === 0) {
     return (
-      <div className="bg-slate-800 rounded-2xl shadow-xl p-8 text-center border border-slate-700">
-        <div className="text-gray-400 mb-6">
-          <svg className="mx-auto h-16 w-16 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="bg-slate-800/95 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl shadow-xl p-6 sm:p-8 md:p-10 text-center border border-slate-700/50">
+        <div className="text-gray-400 mb-4 sm:mb-6">
+          <svg className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-3">No Overs Data Available</h3>
-        <p className="text-gray-300 mb-6">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3">No Overs Data Available</h3>
+        <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6">
           Over-by-over data is not available for this match yet.
         </p>
         {match && (
@@ -169,7 +169,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
                 .then(() => window.location.reload())
                 .catch(console.error);
             }}
-            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 rounded-lg sm:rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             Fetch Overs Data
           </button>
@@ -179,7 +179,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-5 md:space-y-6">
       {/* Overs Summary */}
       <div className="bg-slate-900 rounded-2xl shadow-lg p-5 border border-slate-700">
         <h3 className="text-xl font-bold text-white mb-4">Overs Summary</h3>
@@ -192,19 +192,19 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
             <p className="text-3xl font-bold text-white">
               {oversData.reduce((sum, over) => sum + (over.totalRuns || 0), 0)}
             </p>
-            <p className="text-sm text-blue-200 font-medium">Total Runs</p>
+            <p className="text-xs sm:text-sm text-blue-200 font-medium mt-1">Total Runs</p>
           </div>
           <div className="bg-gradient-to-br from-red-800 to-red-700 p-4 rounded-xl border border-red-600">
             <p className="text-3xl font-bold text-white">
               {oversData.reduce((sum, over) => sum + (over.wickets || 0), 0)}
             </p>
-            <p className="text-sm text-red-200 font-medium">Total Wickets</p>
+            <p className="text-xs sm:text-sm text-red-200 font-medium mt-1">Total Wickets</p>
           </div>
           <div className="bg-gradient-to-br from-purple-800 to-purple-700 p-4 rounded-xl border border-purple-600">
             <p className="text-3xl font-bold text-white">
               {oversData.length > 0 ? (oversData.reduce((sum, over) => sum + (over.totalRuns || 0), 0) / oversData.length).toFixed(1) : '0.0'}
             </p>
-            <p className="text-sm text-purple-200 font-medium">Runs/Over</p>
+            <p className="text-xs sm:text-sm text-purple-200 font-medium mt-1">Runs/Over</p>
           </div>
         </div>
       </div>
@@ -221,7 +221,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
             { color: 'blue', label: 'Regular runs' },
             { color: 'gray', label: 'No runs' },
           ].map((item) => (
-            <div key={item.label} className={`flex items-center space-x-2 bg-${item.color}-900/20 px-3 py-2 rounded-lg`}>
+            <div key={item.label} className={`flex items-center gap-1.5 sm:gap-2 bg-${item.color}-900/20 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg`}>
               <div className={`w-6 h-6 rounded-full bg-gradient-to-br from-${item.color}-500 to-${item.color}-600 border-2 border-${item.color}-700`}></div>
               <span className="font-medium text-white">{item.label}</span>
             </div>
@@ -230,7 +230,7 @@ const MatchOvers: React.FC<MatchOversProps> = ({ overs, match }) => {
       </div>
       
       {/* Overs List */}
-      <div className="space-y-5">
+      <div className="space-y-3 sm:space-y-4 md:space-y-5">
         {oversData.map((over, index) => renderOver(over, index))}
       </div>
     </div>

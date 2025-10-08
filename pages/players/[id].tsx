@@ -19,14 +19,14 @@ export default function PlayerPage({ player, career, battingStats, bowlingStats,
   rankings: PlayerRankings
 }) {
   if (!player) return (
-    <div className="bg-gray-900 min-h-screen">
+    <div className="bg-gray-900 min-h-screen w-full overflow-x-hidden">
       <Navbar />
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        <div className="bg-gray-800 text-gray-400 p-8 rounded-lg shadow text-center">
-          <div className="text-5xl mb-4 text-green-300">🏏</div>
-          <h3 className="text-xl font-bold text-green-300 mb-2">Player Not Found</h3>
-          <p className="text-gray-400 mb-4">The requested player could not be found.</p>
-          <Link href="/" className="bg-green-900 hover:bg-green-800 text-green-300 font-medium py-2 px-4 rounded-lg inline-block transition">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
+        <div className="bg-gray-800/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-8 sm:p-10 md:p-12 text-center border border-gray-700">
+          <div className="text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6 text-green-300">🏏</div>
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-green-300 mb-3 sm:mb-4 px-2">Player Not Found</h3>
+          <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8 px-2">The requested player could not be found.</p>
+          <Link href="/" className="bg-green-600 hover:bg-green-500 text-white font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-xl sm:rounded-2xl inline-block transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base">
             Back to Home
           </Link>
         </div>
@@ -35,9 +35,9 @@ export default function PlayerPage({ player, career, battingStats, bowlingStats,
   );
 
   return (
-    <div className="bg-gray-900 min-h-screen">
+    <div className="bg-gray-900 min-h-screen w-full overflow-x-hidden">
       <Navbar />
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
         <PlayerHeader player={player} />
         
         <PlayerInfo player={player} rankings={rankings} />

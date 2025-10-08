@@ -46,38 +46,41 @@ export default function VenueDetails({ venue, matches, stats }: {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-900 w-full overflow-x-hidden">
       <Navbar />
       
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-green-400">{venue.name}</h1>
-          <Link href="/" className="text-green-300 hover:text-green-400 text-sm font-medium">
-            ← Back to Home
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-3 sm:gap-4">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-green-400 break-words">{venue.name}</h1>
+          <Link href="/" className="group text-green-300 hover:text-green-400 text-sm sm:text-base font-medium flex items-center flex-shrink-0">
+            <svg className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Home
           </Link>
         </div>
         
-        <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-          <div className="mb-4">
-            <h2 className="text-lg font-bold text-white mb-2">Venue Information</h2>
+        <div className="bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 border border-gray-700">
+          <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-3 sm:mb-4">Venue Information</h2>
+          <div className="space-y-2">
             {venue.location && (
-              <p className="text-gray-300">Location: {venue.location}</p>
+              <p className="text-sm sm:text-base text-gray-300"><span className="font-medium text-green-400">Location:</span> {venue.location}</p>
             )}
             {venue.capacity && (
-              <p className="text-gray-300">Capacity: {venue.capacity.toLocaleString()}</p>
+              <p className="text-sm sm:text-base text-gray-300"><span className="font-medium text-green-400">Capacity:</span> {venue.capacity.toLocaleString()}</p>
             )}
           </div>
         </div>
 
         {/* Stats Section */}
         {stats && stats.length > 0 && (
-          <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-            <h2 className="text-lg font-bold text-white mb-4">Venue Statistics</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-5 md:p-6 mb-6 sm:mb-8 border border-gray-700">
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-4 sm:mb-6">Venue Statistics</h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {stats.map((stat, index) => (
-                <div key={index} className="border border-gray-700 rounded p-3 text-center">
-                  <p className="font-medium text-green-400">{stat.value}</p>
-                  <p className="text-gray-300 text-sm">{stat.name}</p>
+                <div key={index} className="border border-gray-700 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center hover:border-green-400 transition-colors">
+                  <p className="text-lg sm:text-xl md:text-2xl font-bold text-green-400">{stat.value}</p>
+                  <p className="text-gray-300 text-xs sm:text-sm mt-1">{stat.name}</p>
                 </div>
               ))}
             </div>
@@ -86,21 +89,21 @@ export default function VenueDetails({ venue, matches, stats }: {
 
         {/* Matches Section */}
         {matches && matches.length > 0 && (
-          <div className="bg-gray-800 rounded-lg shadow-lg p-6">
-            <h2 className="text-lg font-bold text-white mb-4">Recent Matches</h2>
-            <div className="space-y-3">
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-5 md:p-6 border border-gray-700">
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-4 sm:mb-6">Recent Matches</h2>
+            <div className="space-y-3 sm:space-y-4">
               {matches.map((match) => (
-                <div key={match.matchId} className="border border-gray-700 rounded p-3 hover:bg-gray-700 transition cursor-pointer">
-                  <p className="font-medium text-green-400">{match.title}</p>
-                  <p className="text-gray-300 text-sm">{new Date(match.date).toLocaleDateString()}</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
+                <div key={match.matchId} className="border border-gray-700 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:bg-gray-700/50 hover:border-green-400 transition-all cursor-pointer">
+                  <p className="text-sm sm:text-base font-bold text-green-400 mb-1">{match.title}</p>
+                  <p className="text-gray-300 text-xs sm:text-sm mb-2">{new Date(match.date).toLocaleDateString()}</p>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2">
                     {match.teams.map((team, index) => (
-                      <span key={index} className="px-2 py-1 bg-green-700 text-green-200 text-xs rounded">
+                      <span key={index} className="px-2 py-1 bg-green-700 text-green-200 text-xs sm:text-sm rounded-full">
                         {team}
                       </span>
                     ))}
                   </div>
-                  <span className="inline-block mt-2 px-2 py-1 text-xs bg-blue-700 text-blue-200 rounded">
+                  <span className="inline-block mt-2 px-2.5 py-1 text-xs sm:text-sm bg-blue-700 text-blue-200 rounded-full">
                     {match.status}
                   </span>
                 </div>

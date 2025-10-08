@@ -21,17 +21,16 @@ export default function TeamDetails({ team, schedules, results, news }: {
   console.log('Schedules data received:', schedules);
   console.log('Results data received:', results);
   console.log('News data received:', news);
-
   if (!team) {
     console.log('No team data found');
     return <TeamNotFound />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-900 w-full overflow-x-hidden">
       <Navbar />
 
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
         <TeamHeader team={team} />
         
         <TeamInfo team={team} />

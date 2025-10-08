@@ -33,43 +33,52 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg border border-gray-700">
-      <div className="bg-gradient-to-r from-green-700 to-green-800 text-white p-4 rounded-t-lg">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold">
+    <div className="bg-gray-800/95 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-gray-700/50">
+      <div className="bg-gradient-to-r from-green-700 to-green-800 text-white p-3 sm:p-4 md:p-5 rounded-t-lg sm:rounded-t-xl md:rounded-t-2xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold">
             {filters.find(f => f.value === selectedStatsType)?.header || 'Cricket Records'}
           </h2>
-          <div className="text-sm opacity-90">
+          <div className="text-xs sm:text-sm md:text-base opacity-90 font-medium">
             {getMatchTypeLabel()}
           </div>
         </div>
         {records && records.length > 0 && (
-          <p className="text-sm opacity-90 mt-1">
+          <p className="text-xs sm:text-sm opacity-90 mt-2">
             Showing {records.length} records • Top performers in cricket history
           </p>
         )}
       </div>
-      <div className="p-4">
+      <div className="p-3 sm:p-4 md:p-5">
         {records && records.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-700">
-              <thead className="bg-gray-900">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Rank</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Player</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Country</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    {getStatsHeader()}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Against</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Ground</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Period</th>
-                </tr>
-              </thead>
-              <tbody className="bg-gray-800 divide-y divide-gray-700">
-                {records.map((record, index) => (
-                  <tr key={index} className={`${index < 3 ? 'bg-gradient-to-r from-green-900/20 to-green-800/10' : ''} hover:bg-gray-750 transition-colors`}>
-                    <td className="px-6 py-4 whitespace-nowrap">
+          <>
+            <div className="sm:hidden mb-3 px-2 py-1.5 bg-green-900/20 border border-green-500/30 rounded-lg">
+              <p className="text-xs text-green-300 flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Swipe left to see all details
+              </p>
+            </div>
+            <div className="overflow-x-auto -mx-3 sm:-mx-4 md:-mx-5 px-3 sm:px-4 md:px-5 scrollbar-hide">
+              <table className="min-w-full divide-y divide-gray-700/50">
+                <thead className="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-10">
+                  <tr>
+                    <th className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">Rank</th>
+                    <th className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">Player</th>
+                    <th className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">Country</th>
+                    <th className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">
+                      {getStatsHeader()}
+                    </th>
+                    <th className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">Against</th>
+                    <th className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">Ground</th>
+                    <th className="px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 text-left text-xs sm:text-sm font-semibold text-green-400 uppercase tracking-wider">Period</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-gray-800/50 divide-y divide-gray-700/30">
+                  {records.map((record, index) => (
+                    <tr key={index} className={`${index < 3 ? 'bg-gradient-to-r from-green-900/40 to-green-800/30' : ''} hover:bg-gray-700/30 transition-colors duration-150`}>
+                      <td className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold ${
                           index === 0 ? 'bg-yellow-900/30 text-yellow-400' :
@@ -86,42 +95,43 @@ export const RecordsTable: React.FC<RecordsTableProps> = ({
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-700 to-blue-900 flex items-center justify-center mr-3">
-                          <span className="text-white font-bold text-xs">
-                            {getPlayerInitials(record.playerName)}
-                          </span>
+                      <td className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-700 to-blue-900 flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-bold text-xs">
+                              {getPlayerInitials(record.playerName)}
+                            </span>
+                          </div>
+                          <div className="min-w-0">
+                            <div className="text-xs sm:text-sm md:text-base font-medium text-gray-200 truncate">{record.playerName}</div>
+                            <div className="text-xs text-gray-400 hidden sm:block">Cricket Legend</div>
+                          </div>
                         </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-200">{record.playerName}</div>
-                          <div className="text-xs text-gray-400">Cricket Legend</div>
+                      </td>
+                      <td className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-1 sm:gap-2">
+                          <span className="text-base sm:text-lg">{getCountryFlag(record.country)}</span>
+                          <div className="text-xs sm:text-sm md:text-base text-gray-300">{record.country}</div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <span className="text-lg mr-2">{getCountryFlag(record.country)}</span>
-                        <div className="text-sm text-gray-300">{record.country}</div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-bold text-green-400">{record.value}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{record.against || '-'}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{record.ground || '-'}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{record.date || '-'}</td>
+                      </td>
+                      <td className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                        <div className="text-sm sm:text-base md:text-lg font-bold text-green-400">{record.value}</div>
+                      </td>
+                      <td className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-xs sm:text-sm md:text-base text-gray-400">{record.against || '-'}</td>
+                      <td className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-xs sm:text-sm md:text-base text-gray-400">{record.ground || '-'}</td>
+                      <td className="px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-xs sm:text-sm md:text-base text-gray-400">{record.date || '-'}</td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
-          </div>
+                </tbody>
+              </table>
+            </div>
+          </>
         ) : (
-          <div className="bg-gray-800 rounded-lg shadow p-8 text-center border border-gray-700">
-            <div className="text-5xl mb-4">📊</div>
-            <h3 className="text-xl font-bold text-gray-100 mb-2">No Records Found</h3>
-            <p className="text-gray-400 mb-4">No records available for the selected filters. Try different options!</p>
-            <Link href="/records" className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg inline-block transition">
+          <div className="bg-gray-900/50 rounded-lg sm:rounded-xl shadow p-6 sm:p-8 md:p-10 text-center border border-gray-700/50">
+            <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">📊</div>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-100 mb-2 sm:mb-3">No Records Found</h3>
+            <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-5">No records available for the selected filters. Try different options!</p>
+            <Link href="/records" className="bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-medium py-2 sm:py-2.5 md:py-3 px-4 sm:px-5 md:px-6 rounded-lg sm:rounded-xl inline-block transition-all duration-200 transform hover:scale-105">
               Reset Filters
             </Link>
           </div>

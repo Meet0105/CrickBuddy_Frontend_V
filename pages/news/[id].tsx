@@ -28,14 +28,14 @@ type Photo = {
 export default function NewsDetails({ news, photos }: { news: NewsItem, photos: Photo[] }) {
   if (!news) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 w-full overflow-x-hidden">
         <Navbar />
-        <main className="max-w-4xl mx-auto px-4 py-6">
-          <div className="bg-gray-800 rounded-lg shadow-lg p-8 text-center border border-gray-700">
-            <div className="text-5xl mb-4">📰</div>
-            <h3 className="text-xl font-bold text-gray-100 mb-2">News Not Found</h3>
-            <p className="text-gray-400 mb-4">The requested news article could not be found.</p>
-            <Link href="/news" className="bg-green-600 hover:bg-green-500 text-white font-medium py-2 px-4 rounded-lg inline-block transition">
+        <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-8 sm:p-10 md:p-12 text-center border border-gray-700">
+            <div className="text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6">📰</div>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-100 mb-3 sm:mb-4 px-2">News Not Found</h3>
+            <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8 px-2">The requested news article could not be found.</p>
+            <Link href="/news" className="bg-green-600 hover:bg-green-500 text-white font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-xl sm:rounded-2xl inline-block transition-all transform hover:scale-105 shadow-lg text-sm sm:text-base">
               Back to News
             </Link>
           </div>
@@ -54,20 +54,23 @@ export default function NewsDetails({ news, photos }: { news: NewsItem, photos: 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 w-full overflow-x-hidden">
       <Navbar />
       
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-green-400">Cricket News</h1>
-          <Link href="/news" className="text-green-400 hover:text-green-300 text-sm font-medium transition">
-            ← Back to News
+      <main className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-3 sm:gap-4">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-400">Cricket News</h1>
+          <Link href="/news" className="group text-green-400 hover:text-green-300 text-sm sm:text-base font-medium transition flex items-center">
+            <svg className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to News
           </Link>
         </div>
         
-        <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+        <div className="bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg overflow-hidden border border-gray-700">
           {news.featuredImage?.url && (
-            <div className="w-full h-64 md:h-96 overflow-hidden">
+            <div className="w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
               <img 
                 src={`https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1200,t_ds_h_675/lsci/db/PICTURES/CMS/${Math.floor(parseInt(news.featuredImage.url) / 1000) * 1000}/${news.featuredImage.url}.jpg`}
                 alt={news.headline}
@@ -79,32 +82,32 @@ export default function NewsDetails({ news, photos }: { news: NewsItem, photos: 
                 }}
               />
               {news.featuredImage.caption && (
-                <p className="text-gray-400 text-sm p-3 bg-gray-900 border-t border-gray-700">{news.featuredImage.caption}</p>
+                <p className="text-gray-400 text-xs sm:text-sm p-2 sm:p-3 bg-gray-900 border-t border-gray-700">{news.featuredImage.caption}</p>
               )}
             </div>
           )}
           
-          <div className="p-6">
-            <div className="flex justify-between items-start mb-4">
-              <h1 className="text-2xl font-bold text-gray-100">{news.headline}</h1>
-              <span className="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded">
+          <div className="p-4 sm:p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-100 break-words flex-1">{news.headline}</h1>
+              <span className="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-1 rounded-full flex-shrink-0">
                 {news.category}
               </span>
             </div>
             
             {news.subHeadline && (
-              <p className="text-gray-400 text-lg mb-4">{news.subHeadline}</p>
+              <p className="text-gray-400 text-base sm:text-lg mb-4 sm:mb-6">{news.subHeadline}</p>
             )}
             
-            <div className="flex items-center text-sm text-gray-500 mb-6">
+            <div className="flex flex-wrap items-center text-xs sm:text-sm text-gray-500 mb-6 sm:mb-8 gap-2">
               <span>By {news.author.name}</span>
-              <span className="mx-2">•</span>
+              <span className="hidden sm:inline mx-2">•</span>
               <span>{new Date(news.publishedDate).toLocaleDateString()}</span>
-              <span className="mx-2">•</span>
+              <span className="hidden sm:inline mx-2">•</span>
               <span>{news.readTime} min read</span>
             </div>
             
-            <div className="prose prose-invert max-w-none text-gray-300 whitespace-pre-line">
+            <div className="prose prose-invert max-w-none text-sm sm:text-base text-gray-300 whitespace-pre-line leading-relaxed">
               <p>{news.content}</p>
             </div>
           </div>
@@ -112,11 +115,11 @@ export default function NewsDetails({ news, photos }: { news: NewsItem, photos: 
 
         {/* Photo Gallery Section */}
         {photos && photos.length > 0 && (
-          <div className="bg-gray-800 rounded-lg shadow-lg p-6 mt-6 border border-gray-700">
-            <h2 className="text-xl font-bold text-green-400 mb-4">Photo Gallery</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 mt-6 sm:mt-8 border border-gray-700">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-green-400 mb-4 sm:mb-6">Photo Gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {photos.map((photo) => (
-                <div key={photo.id} className="overflow-hidden rounded-lg">
+                <div key={photo.id} className="overflow-hidden rounded-lg sm:rounded-xl">
                   {photo.imageUrl ? (
                     <img 
                       src={photo.imageUrl} 
@@ -131,7 +134,7 @@ export default function NewsDetails({ news, photos }: { news: NewsItem, photos: 
                     />
                   )}
                   {photo.caption && (
-                    <p className="text-gray-400 text-sm p-2 bg-gray-900 border-t border-gray-700">{photo.caption}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm p-2 bg-gray-900 border-t border-gray-700 line-clamp-2">{photo.caption}</p>
                   )}
                 </div>
               ))}

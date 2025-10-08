@@ -43,6 +43,11 @@ export default function SeriesDetails({ series, matches }: { series: Series; mat
     }
   };
 
+  // Early return if no series data
+  if (!series) {
+    return <SeriesNotFound />;
+  }
+
   useEffect(() => {
     console.log('useEffect triggered:', { activeTab, seriesData, seriesId: series?.seriesId });
     if (activeTab !== 'matches' && !seriesData) {
@@ -71,33 +76,31 @@ export default function SeriesDetails({ series, matches }: { series: Series; mat
     }
   }, [activeTab, seriesData, series?.seriesId]);
 
-  if (!series) {
-    return <SeriesNotFound />;
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 w-full overflow-x-hidden">
       <Navbar />
       
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-green-400">{series.name}</h1>
-          <Link href="/series" className="text-green-400 hover:text-green-300 text-sm font-medium transition">
-            ← Back to Series
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-3 sm:gap-4">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-green-400 break-words">{series.name}</h1>
+          <Link href="/series" className="group text-green-400 hover:text-green-300 text-sm sm:text-base font-medium transition flex items-center flex-shrink-0">
+            <svg className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Series
           </Link>
         </div>
         
         <SeriesInfo series={series} />
         
         {/* Tab Navigation */}
-        <div className="bg-gray-800 rounded-lg shadow-lg mb-6 border border-gray-700">
+        <div className="bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg mb-6 sm:mb-8 border border-gray-700">
           <SeriesTabs 
             activeTab={activeTab} 
             setActiveTab={setActiveTab} 
             setSeriesData={setSeriesData} 
           />
-          
-          <div className="p-6">
+          <div className="p-4 sm:p-5 md:p-6">
             <SeriesStatus loading={loading} error={error} />
             
             {activeTab === 'matches' && (

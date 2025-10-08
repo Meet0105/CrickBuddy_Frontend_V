@@ -32,20 +32,19 @@ const SeriesSquads: React.FC<SeriesSquadsProps> = ({ squads, seriesName }) => {
   
   if (!squads || squads.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
-        <div className="text-gray-500 dark:text-gray-400 mb-4">
-          <svg className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow p-4 sm:p-6 text-center">
+        <div className="text-gray-500 dark:text-gray-400 mb-3 sm:mb-4">
+          <svg className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No Squads Available</h3>
-        <p className="text-gray-500 dark:text-gray-400">
+        <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No Squads Available</h3>
+        <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
           Squad data is not available for this series yet.
         </p>
       </div>
     );
   }
-
   const getRoleColor = (role: string) => {
     switch (role.toLowerCase()) {
       case 'batsman':
@@ -69,7 +68,7 @@ const SeriesSquads: React.FC<SeriesSquadsProps> = ({ squads, seriesName }) => {
   };
 
   const renderPlayerCard = (player: Player, index: number) => (
-    <div key={index} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+    <div key={index} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3 sm:p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
       <div className="flex justify-between items-start mb-2">
         <h4 className="font-medium text-gray-900 dark:text-gray-100 flex items-center">
           {getPlayerName(player)}
@@ -113,15 +112,15 @@ const SeriesSquads: React.FC<SeriesSquadsProps> = ({ squads, seriesName }) => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-5 md:space-y-6">
       {/* Squads Summary */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Team Squads</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{seriesName}</p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow p-3 sm:p-4 md:p-5">
+        <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 dark:text-gray-100 mb-1 sm:mb-2">Team Squads</h3>
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2 sm:mb-3 truncate">{seriesName}</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 text-center">
           <div>
-            <p className="text-2xl font-bold text-green-600 dark:text-green-400">{squads.length}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Teams</p>
+            <p className="text-xl sm:text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">{squads.length}</p>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Teams</p>
           </div>
           <div>
             <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
@@ -146,16 +145,16 @@ const SeriesSquads: React.FC<SeriesSquadsProps> = ({ squads, seriesName }) => {
 
       {/* Team Squads */}
       {squads?.map((squad, squadIndex) => (
-        <div key={squadIndex} className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-          <div className="bg-gray-800 dark:bg-gray-900 text-white p-4">
+        <div key={squadIndex} className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow overflow-hidden">
+          <div className="bg-gray-800 dark:bg-gray-900 text-white p-3 sm:p-4 md:p-5">
             <div className="flex justify-between items-center">
-              <div>
-                <h4 className="text-lg font-bold">
+              <div className="min-w-0 flex-1">
+                <h4 className="text-base sm:text-lg md:text-xl font-bold truncate">
                   {squad.teamName || squad?.squadType || `Team ${squadIndex + 1}`}
                 </h4>
-                <p className="text-sm text-gray-300 dark:text-gray-400">{squad.players?.length || 0} players</p>
+                <p className="text-xs sm:text-sm text-gray-300 dark:text-gray-400">{squad.players?.length || 0} players</p>
               </div>
-              <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-bold">
                   {(squad.teamName || squad.squadType|| 'T').substring(0, 3).toUpperCase() }
                 </span>
@@ -163,15 +162,15 @@ const SeriesSquads: React.FC<SeriesSquadsProps> = ({ squads, seriesName }) => {
             </div>
           </div>
           
-          <div className="p-4">
+          <div className="p-3 sm:p-4 md:p-5">
             {/* Playing XI */}
             {squad.players.some(p => p.isPlaying11) && (
               <div className="mb-6">
-                <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center">
+                <h5 className="text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 flex items-center">
                   <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                   Playing XI
                 </h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                   {squad.players
                     .filter(player => player.isPlaying11)
                     .map((player, index) => renderPlayerCard(player, index))}
@@ -181,8 +180,8 @@ const SeriesSquads: React.FC<SeriesSquadsProps> = ({ squads, seriesName }) => {
             
             {/* Full Squad */}
             <div>
-              <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Full Squad</h5>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <h5 className="text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100 mb-2 sm:mb-3">Full Squad</h5>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
                 {squad.players.map((player, index) => renderPlayerCard(player, index))}
               </div>
             </div>

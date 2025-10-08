@@ -13,11 +13,11 @@ export const SeriesTabs: React.FC<SeriesTabsProps> = ({ activeTab, setActiveTab,
   };
 
   return (
-    <div className="border-b border-gray-700 bg-gray-900">
-      <nav className="flex">
+    <div className="border-b border-gray-700/50 bg-gray-900/95 backdrop-blur-sm sticky top-0 z-20">
+      <nav className="flex overflow-x-auto scrollbar-hide">
         <button
           onClick={() => setActiveTab('matches')}
-          className={`px-4 py-3 text-sm font-medium transition focus:outline-none ${
+          className={`flex-shrink-0 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 text-xs sm:text-sm md:text-base font-semibold transition-all duration-200 focus:outline-none whitespace-nowrap ${
             activeTab === 'matches'
               ? 'text-green-400 border-b-2 border-green-500 bg-gray-800'
               : 'text-gray-400 hover:text-gray-200'
@@ -27,7 +27,7 @@ export const SeriesTabs: React.FC<SeriesTabsProps> = ({ activeTab, setActiveTab,
         </button>
         <button
           onClick={() => handleTabChange('schedule')}
-          className={`px-4 py-3 text-sm font-medium transition focus:outline-none ${
+          className={`flex-shrink-0 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 text-xs sm:text-sm md:text-base font-semibold transition-all duration-200 focus:outline-none whitespace-nowrap ${
             activeTab === 'schedule'
               ? 'text-green-400 border-b-2 border-green-500 bg-gray-800'
               : 'text-gray-400 hover:text-gray-200'
@@ -37,7 +37,7 @@ export const SeriesTabs: React.FC<SeriesTabsProps> = ({ activeTab, setActiveTab,
         </button>
         <button
           onClick={() => handleTabChange('squads')}
-          className={`px-4 py-3 text-sm font-medium transition focus:outline-none ${
+          className={`flex-shrink-0 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 text-xs sm:text-sm md:text-base font-semibold transition-all duration-200 focus:outline-none whitespace-nowrap ${
             activeTab === 'squads'
               ? 'text-green-400 border-b-2 border-green-500 bg-gray-800'
               : 'text-gray-400 hover:text-gray-200'
@@ -47,7 +47,7 @@ export const SeriesTabs: React.FC<SeriesTabsProps> = ({ activeTab, setActiveTab,
         </button>
         <button
           onClick={() => handleTabChange('venues')}
-          className={`px-4 py-3 text-sm font-medium transition focus:outline-none ${
+          className={`flex-shrink-0 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 text-xs sm:text-sm md:text-base font-semibold transition-all duration-200 focus:outline-none whitespace-nowrap ${
             activeTab === 'venues'
               ? 'text-green-400 border-b-2 border-green-500 bg-gray-800'
               : 'text-gray-400 hover:text-gray-200'
@@ -57,7 +57,7 @@ export const SeriesTabs: React.FC<SeriesTabsProps> = ({ activeTab, setActiveTab,
         </button>
         <button
           onClick={() => handleTabChange('points')}
-          className={`px-4 py-3 text-sm font-medium transition focus:outline-none ${
+          className={`flex-shrink-0 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 text-xs sm:text-sm md:text-base font-semibold transition-all duration-200 focus:outline-none whitespace-nowrap ${
             activeTab === 'points'
               ? 'text-green-400 border-b-2 border-green-500 bg-gray-800'
               : 'text-gray-400 hover:text-gray-200'
@@ -67,7 +67,7 @@ export const SeriesTabs: React.FC<SeriesTabsProps> = ({ activeTab, setActiveTab,
         </button>
         <button
           onClick={() => handleTabChange('stats')}
-          className={`px-4 py-3 text-sm font-medium transition focus:outline-none ${
+          className={`flex-shrink-0 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 text-xs sm:text-sm md:text-base font-semibold transition-all duration-200 focus:outline-none whitespace-nowrap ${
             activeTab === 'stats'
               ? 'text-green-400 border-b-2 border-green-500 bg-gray-800'
               : 'text-gray-400 hover:text-gray-200'
